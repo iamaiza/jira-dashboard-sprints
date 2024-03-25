@@ -12,7 +12,7 @@ export default function RootLayout({
     <CurrentUserContextProvider>
       <div className="px-5 max-sm:px-3">
         <Navbar />
-        <main className="mt-24">{children}</main>
+        <main className="mt-20 2xl:mt-24">{children}</main>
       </div>
     </CurrentUserContextProvider>
   );

@@ -64,7 +64,7 @@ const CreateSprintModal = ({
   };
 
   return (
-    <div className="bg-white absolute left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
+    <div className="bg-white top-1/2 -translate-y-1/2 absolute left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
       <form className="w-full" onSubmit={createSprintHandler}>
         <input
           type="text"
