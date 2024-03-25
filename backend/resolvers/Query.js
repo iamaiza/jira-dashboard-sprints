@@ -33,6 +33,14 @@ const Query = {
         const tasks = await prisma.task.findMany();
         return tasks;
     },
+    task: async(_, args, { prisma }) => {
+        const id = args.id;
+        const task = await prisma.task.findUnique({ where: { id: parseInt(id) } })
+        if(!task) {
+            return { message: "No task found with this id" }
+        }
+        return task;
+    }
 }
 
 module.exports = Query;

@@ -18,7 +18,7 @@ const Tasks = () => {
     setShowModal(true);
   };
   return (
-    <div className="mt-32">
+    <div className="">
       <div className="text-end">
         <button
           className="bg-pink-600 text-white px-3 py-2 rounded"

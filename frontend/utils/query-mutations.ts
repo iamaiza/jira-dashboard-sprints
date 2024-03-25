@@ -127,8 +127,12 @@ export const CREATE_TASK = gql`
     createTask(data: $data) {
       id
       title
-      assigneeId
-      sprintId
+      assigneeId {
+        id
+      }
+      sprintId {
+        id
+      }
     }
   }
 `;
@@ -138,9 +142,37 @@ export const TASKS = gql`
     tasks {
       id
       title
+      description
       status
-      assigneeId
-      sprintId
+      assigneeId {
+        id
+      }
+      sprintId {
+        id
+      }
+      priority
+    }
+  }
+`;
+
+export const TASK = gql`
+  query($id: String!) {
+    task(id: $id) {
+      id
+      title
+      description
+      status
+      assigneeId {
+        id
+        name
+        imgUrl
+      }
+      sprintId {
+        id
+        title
+        status
+      }
+      priority
     }
   }
 `;
