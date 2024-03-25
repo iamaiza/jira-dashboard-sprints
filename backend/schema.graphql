@@ -1,0 +1,124 @@
+scalar DateTime
+
+type Query {
+    currentUser(userId: String): User!
+    users: [User!]!
+    sprints: [Sprint!]!
+    sprint(id: String): Sprint!
+    tasks: [Task!]!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    imgUrl: String
+    jobTitle: String
+    department: String!
+    organization: String
+    location: String
+    tasks: [Task!]!
+}
+
+type Sprint {
+    id: ID!
+    title: String!
+    description: String
+    status: [String!]!
+    startDate: DateTime!
+    endDate: DateTime!
+    tasks: [Task!]!
+}
+
+type Task {
+    id: ID!
+    title: String!
+    description: String
+    status: String!
+    attachment: String
+    assigneeId: ID!
+    priority: String!
+    sprintId: ID!
+}
+
+type AuthPayload {
+    token: String!
+    user: User!
+}
+
+type PasswordPayload {
+    message: String!
+}
+
+type DeleteUserPayload {
+    field: String
+    value: String
+}
+
+input RegisterUserInput {
+    name: String!
+    email: String!
+    password: String!
+    imgUrl: String
+    jobTitle: String
+    department: String
+    organization: String
+    location: String
+}
+
+input LoginUserInput {
+    email: String!
+    password: String!
+}
+
+input ForgotPasswordInput {
+    email: String!
+}
+
+input ResetPasswordInput {
+    newPassword: String!
+    confirmPassword: String!
+}
+
+input UpdateUserInput {
+    jobTitle: String
+    department: String
+    organization: String
+    location: String
+}
+
+input DeleteUserInput {
+    field: String!
+    value: String!
+}
+
+input CreateSprintInput {
+    title: String!
+    description: String
+    status: [String!]!
+    startDate: DateTime!
+    endDate: DateTime!
+}
+
+input CreateTaskInput {
+    title: String!
+    description: String
+    status: String!
+    priority: String!
+    attachment: String
+    assigneeId: ID!
+    sprintId: ID!
+}
+
+type Mutation {
+    registerUser(data: RegisterUserInput): AuthPayload!
+    loginUser(data: LoginUserInput): AuthPayload!
+    forgotPassword(data: ForgotPasswordInput!): PasswordPayload!
+    resetPassword(email: String!, data: ResetPasswordInput!): PasswordPayload!
+    updateUser(id: String!, data: UpdateUserInput!): User!
+    deleteUser(id: String!, data: DeleteUserInput!): DeleteUserPayload!
+    createSprint(data: CreateSprintInput!): Sprint!
+    createTask(data: CreateTaskInput!): Task!
+
+}

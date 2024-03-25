@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  password     String
+  imgUrl       String?
+  jobTitle     String?
+  department   String?
+  organization String?
+  location     String?
+  tasks        Task[]
+}
+
+model Sprint {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  status      String[]
+  startDate   DateTime
+  endDate     DateTime
+  tasks       Task[]
+}
+
+model Task {
+  id            Int       @id @default(autoincrement())
+  title         String
+  description   String?
+  status        String
+  attachment    String?
+  estimatedTime DateTime?
+  timeTaken     DateTime?
+  assigneeId    Int
+  assignee      User      @relation(fields: [assigneeId], references: [id])
+  priority      String
+  sprintId      Int
+  sprint        Sprint    @relation(fields: [sprintId], references: [id])
+}
