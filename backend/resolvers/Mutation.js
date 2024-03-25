@@ -182,8 +182,8 @@ const Mutation = {
     } = args.data;
     const parseAssigneeId = parseInt(assigneeId);
     const parseSprintId = parseInt(sprintId)
-    console.log(typeof parseInt(assigneeId));
-    console.log(typeof parseInt(sprintId));
+
+
     const user = await prisma.user.findUnique({
       where: { id: parseAssigneeId },
     });

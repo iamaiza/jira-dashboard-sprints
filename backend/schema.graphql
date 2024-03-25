@@ -6,6 +6,7 @@ type Query {
     sprints: [Sprint!]!
     sprint(id: String): Sprint!
     tasks: [Task!]!
+    task(id: String!) : Task!
 }
 
 type User {
@@ -37,9 +38,9 @@ type Task {
     description: String
     status: String!
     attachment: String
-    assigneeId: ID!
+    assigneeId: User!
     priority: String!
-    sprintId: ID!
+    sprintId: Sprint!
 }
 
 type AuthPayload {
