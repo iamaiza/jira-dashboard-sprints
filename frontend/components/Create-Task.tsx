@@ -19,8 +19,8 @@ const CreateTaskModal = ({
     desc: "",
     priority: "high",
     fileUrl: "",
-    assignee: `${users[0]?.id || "1"}`,
-    sprint: `${sprints[0]?.id || "1"}`,
+    assignee: `${usersData?.users[0]?.id || "1"}`,
+    sprint: `${data?.sprints[0]?.id || "1"}`,
   }));
   const [error, setError] = useState("");
   const [createTaskMutation] = useMutation(CREATE_TASK, {
@@ -71,6 +71,7 @@ const CreateTaskModal = ({
         setError("Fields must not be empty");
         return;
       }
+
       const { data } = await createTaskMutation({
         variables: {
             data: {
@@ -91,7 +92,7 @@ const CreateTaskModal = ({
   };
 
   return (
-    <div className="bg-white absolute left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
+    <div className="bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
       <form className="w-full mt-7" onSubmit={createTaskHandler}>
         <input
           type="text"
