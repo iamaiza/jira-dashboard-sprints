@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <div className="flexBetween gap-5 fixed top-0 left-0 w-full z-20 bg-white h-16 py-1 px-5 max-sm:px-3">
       <div className="flexCenter gap-4 sm:gap-8">
-        <Link href="/" className="font-bold text-2xl max-[400px]:text-[19px]">
+        <Link href="/" className="font-bold text-xl 2xl:text-2xl max-[400px]:text-[19px]">
           Dashboard
         </Link>
         <nav>
