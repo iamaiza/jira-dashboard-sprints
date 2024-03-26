@@ -182,6 +182,15 @@ export const TASK = gql`
         status
       }
       priority
+      comments {
+        id
+        text
+        userId {
+          id
+          name
+          imgUrl
+        }
+      }
     }
   }
 `;
@@ -193,3 +202,22 @@ export const UPDATE_DESCRIPTION = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation createComment($data: CreateCommentInput!) {
+    createComment(data: $data) {
+      id
+      text
+      taskId {
+        id
+        title
+      }
+      userId {
+        id
+        name
+        imgUrl
+      }
+    }
+  }
+`;
+

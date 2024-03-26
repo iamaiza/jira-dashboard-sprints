@@ -218,6 +218,33 @@ const Mutation = {
       data: { description }
     })
     return updatedDesc;
+  },
+  createComment: async(_, args, { prisma }) => {
+    const { text, userId, taskId } = args.data;
+    const parseTaskId = parseInt(taskId);
+    const parseUserId = parseInt(userId);
+
+    const user = await prisma.user.findUnique({
+      where: { id: parseUserId },
+    });
+    if(!user) {
+      return { message: 'User not found'};
+    }
+    const task = await prisma.task.findUnique({
+      where: { id: parseTaskId },
+    });
+    if(!task) {
+      return { message: 'Task not found'};
+    }
+
+    const comment = await prisma.comment.create({
+      data: {
+        text,
+        userId: parseUserId,
+        taskId: parseTaskId,
+      }
+    });
+    return comment;
   }
 };
 
