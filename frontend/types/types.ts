@@ -20,6 +20,7 @@ export interface SprintProps {
     status: string[];
     startDate: string;
     endDate: string;
+    tasks: TaskProps[]
 }
 
 export interface TaskProps {
