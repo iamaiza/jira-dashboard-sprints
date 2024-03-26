@@ -57,6 +57,10 @@ type DeleteUserPayload {
     value: String
 }
 
+type DescPayload {
+    description: String
+}
+
 input RegisterUserInput {
     name: String!
     email: String!
@@ -112,6 +116,11 @@ input CreateTaskInput {
     sprintId: ID!
 }
 
+
+input UpdateDescriptionInput {
+    description: String
+}
+
 type Mutation {
     registerUser(data: RegisterUserInput): AuthPayload!
     loginUser(data: LoginUserInput): AuthPayload!
@@ -121,5 +130,5 @@ type Mutation {
     deleteUser(id: String!, data: DeleteUserInput!): DeleteUserPayload!
     createSprint(data: CreateSprintInput!): Sprint!
     createTask(data: CreateTaskInput!): Task!
-
+    updateDescription(id: String!, data: UpdateDescriptionInput!): DescPayload!
 }

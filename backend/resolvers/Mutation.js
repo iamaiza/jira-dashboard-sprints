@@ -210,6 +210,15 @@ const Mutation = {
 
     return task;
   },
+  updateDescription: async(_, args, { prisma }) => {
+    const id = args.id;
+    const { description } = args.data;
+    const updatedDesc = await prisma.task.update({
+      where: { id: parseInt(id) },
+      data: { description }
+    })
+    return updatedDesc;
+  }
 };
 
 module.exports = Mutation;

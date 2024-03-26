@@ -28,3 +28,32 @@ select {
 .backdrop {
   @apply absolute inset-0 w-full bg-[#00000054] z-30
 }
+
+.desc-list-style ul {
+  @apply list-disc pl-5
+}
+.desc-list-style ol {
+  @apply list-decimal pl-5
+}
+
+.desc-list-style h1 {
+  @apply text-[1.5rem]
+}
+.desc-list-style h2 {
+  @apply text-xl
+}
+.desc-list-style h3 {
+  @apply text-base
+}
+.desc-list-style h4 {
+  @apply text-xs
+}
+.desc-list-style h5 {
+  @apply text-[0.7rem]
+}
+.desc-list-style h6 {
+  @apply text-[0.55rem]
+}
+.desc-list-style a {
+  @apply text-sky-600 underline
+}
