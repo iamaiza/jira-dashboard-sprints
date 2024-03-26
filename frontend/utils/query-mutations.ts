@@ -108,6 +108,15 @@ export const SPRINT = gql`
       status
       startDate
       endDate
+      tasks {
+        title
+        priority
+        status
+        assigneeId {
+          id
+          imgUrl
+        }
+      }
     }
   }
 `;
