@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DescCommentInput from "./desc-comment-input";
 import { TaskProps, User } from "@/types/types";
 import useCurrentUser from "@/context/CurrentUserContext";
+import { useMutation } from "@apollo/client";
+import { UPDATE_DESCRIPTION } from "@/utils/query-mutations";
 
 const TaskDetail1 = ({
   task,
@@ -17,9 +19,19 @@ const TaskDetail1 = ({
   showCommentEditor: () => void;
   hideEditor: () => void;
 }) => {
-    const { user } = useCurrentUser();
+  const { user } = useCurrentUser();
   const [desc, setDesc] = useState("");
   const [comment, setComment] = useState("");
+  const [updateDescMutation] = useMutation(UPDATE_DESCRIPTION, {
+    variables: {
+      id: task?.id,
+    }
+  });
+
+  useEffect(() => {
+    if(task?.description) setDesc(task.description)
+  }, [task?.description])
+
   const handleChange = (value: string) => {
     if (showEditor === "desc") {
       setDesc(value);
@@ -28,14 +40,19 @@ const TaskDetail1 = ({
     }
   };
   const updateDescHandler = async () => {
-    // try {
-    //   const res = await axios.patch(`/api/tasks/${task.id}/update`, { desc });
-    //   const data = await res.data;
-    //   setDesc(data.description);
-    //   hideEditor();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      if(!desc.trim()) return;
+      const { data } = await updateDescMutation({
+        variables: {
+          data: {
+            description: desc
+          }
+        }
+      })
+      hideEditor();
+    } catch (error) {
+      console.log(error);
+    }
   };
   const stripeHTMLTags = (html: string) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -44,17 +61,25 @@ const TaskDetail1 = ({
 
   const formattedDesc = desc ? stripeHTMLTags(desc) : "";
   const createCommentHandler = async () => {
-    // try {
+    try {
     //   await axios.post(`/api/tasks/${task.id}/comment`, {
     //     comment,
     //     authorId: user?.id,
     //     taskID: task?.id
     //   });
     //   hideEditor();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const getDescInHTMLFormat = () => {
+    if(formattedDesc) {
+      return <div className="desc-list-style" dangerouslySetInnerHTML={{ __html: desc }} />
+    } else {
+      return <div children="Add description..." />
+    }
+  }
 
   return (
     <div className=" max-w-4xl w-full">
@@ -82,9 +107,7 @@ const TaskDetail1 = ({
         ) : (
           <div
             className="w-full min-h-10 p-2 text-sm hover:bg-gray-100 mt-2 cursor-default rounded"
-            onClick={showDescEditor}
-            children={formattedDesc || "Add description..."}
-          />
+            onClick={showDescEditor}>{getDescInHTMLFormat()}</div>
         )}
       </div>
       <div
@@ -129,7 +152,7 @@ const TaskDetail1 = ({
               className="w-full h-10 p-2 text-sm hover:bg-gray-100 cursor-default rounded"
               children="Add comment"
               onClick={showCommentEditor}
-            />
+            ></div>
           )}
         </div>
       </div>

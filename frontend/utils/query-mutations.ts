@@ -176,3 +176,11 @@ export const TASK = gql`
     }
   }
 `;
+
+export const UPDATE_DESCRIPTION = gql`
+  mutation updateDescription($id: String!, $data: UpdateDescriptionInput!) {
+    updateDescription(id: $id, data: $data) {
+      description
+    }
+  }
+`;
