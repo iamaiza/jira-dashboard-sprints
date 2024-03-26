@@ -30,4 +30,12 @@ export interface TaskProps {
     priority: string;
     assigneeId: User | null;
     sprintId: SprintProps | null;
+    comments: CommentProps[]
+}
+
+export interface CommentProps {
+    id: string;
+    text: string;
+    userId: User | null;
+    taskId: TaskProps | null;
 }

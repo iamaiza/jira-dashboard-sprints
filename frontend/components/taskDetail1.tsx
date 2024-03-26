@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import DescCommentInput from "./desc-comment-input";
-import { TaskProps, User } from "@/types/types";
+import { CommentProps, TaskProps } from "@/types/types";
 import useCurrentUser from "@/context/CurrentUserContext";
 import { useMutation } from "@apollo/client";
-import { UPDATE_DESCRIPTION } from "@/utils/query-mutations";
+import { CREATE_COMMENT, UPDATE_DESCRIPTION } from "@/utils/query-mutations";
+import Comments from "./Comments";
 
 const TaskDetail1 = ({
   task,
@@ -27,10 +28,13 @@ const TaskDetail1 = ({
       id: task?.id,
     }
   });
+  const [createCommentMutation] = useMutation(CREATE_COMMENT)
+  const [comments, setComments] = useState<CommentProps[]>([]);
 
   useEffect(() => {
     if(task?.description) setDesc(task.description)
-  }, [task?.description])
+    if(task?.comments) setComments(task.comments)
+  }, [task?.description, task?.comments])
 
   const handleChange = (value: string) => {
     if (showEditor === "desc") {
@@ -62,12 +66,18 @@ const TaskDetail1 = ({
   const formattedDesc = desc ? stripeHTMLTags(desc) : "";
   const createCommentHandler = async () => {
     try {
-    //   await axios.post(`/api/tasks/${task.id}/comment`, {
-    //     comment,
-    //     authorId: user?.id,
-    //     taskID: task?.id
-    //   });
-    //   hideEditor();
+      if(!comment.trim()) return;
+      const { data } = await createCommentMutation({
+        variables: {
+          data: {
+            text: comment,
+            taskId: task?.id,
+            userId: user?.id
+          }
+        }
+      })
+      setComments([...comments, data?.createComment])
+      hideEditor();
     } catch (error) {
       console.log(error);
     }
@@ -156,9 +166,9 @@ const TaskDetail1 = ({
           )}
         </div>
       </div>
-      {/* {comments?.map((comment) => (
+      {comments?.map((comment) => (
         <Comments comment={comment} />
-      ))} */}
+      ))}
     </div>
   );
 };

@@ -20,6 +20,7 @@ type User {
     organization: String
     location: String
     tasks: [Task!]!
+    comments: [Comment!]!
 }
 
 type Sprint {
@@ -41,6 +42,14 @@ type Task {
     assigneeId: User!
     priority: String!
     sprintId: Sprint!
+    comments: [Comment!]!
+}
+
+type Comment {
+    id: ID!
+    text: String!
+    userId: User!
+    taskId: Task!
 }
 
 type AuthPayload {
@@ -121,6 +130,12 @@ input UpdateDescriptionInput {
     description: String
 }
 
+input CreateCommentInput {
+    text: String!
+    userId: ID!
+    taskId: ID!
+}
+
 type Mutation {
     registerUser(data: RegisterUserInput): AuthPayload!
     loginUser(data: LoginUserInput): AuthPayload!
@@ -131,4 +146,5 @@ type Mutation {
     createSprint(data: CreateSprintInput!): Sprint!
     createTask(data: CreateTaskInput!): Task!
     updateDescription(id: String!, data: UpdateDescriptionInput!): DescPayload!
+    createComment(data: CreateCommentInput!): Comment!
 }
