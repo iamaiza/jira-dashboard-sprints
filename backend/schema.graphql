@@ -6,7 +6,9 @@ type Query {
     sprints: [Sprint!]!
     sprint(id: String): Sprint!
     tasks: [Task!]!
-    task(id: String!) : Task!
+    task(id: String!): Task!
+    issues: [Issue!]!
+    issue(id: String!): Issue!
 }
 
 type User {
@@ -19,8 +21,13 @@ type User {
     department: String!
     organization: String
     location: String
-    tasks: [Task!]!
+    aTasks: [Task!]!
+    rTasks: [Task!]!
     comments: [Comment!]!
+    aIssues: [Issue!]!
+    rIssues: [Issue!]!
+    vIssues: [Issue!]!
+    qaIssues: [Issue!]!
 }
 
 type Sprint {
@@ -31,6 +38,7 @@ type Sprint {
     startDate: DateTime!
     endDate: DateTime!
     tasks: [Task!]!
+    issues: [Issue!]!
 }
 
 type Task {
@@ -40,7 +48,27 @@ type Task {
     status: String!
     attachment: String
     assigneeId: User!
+    reporterId: User!
     priority: String!
+    sprintId: Sprint!
+    comments: [Comment!]!
+    issues: [Issue!]!
+}
+
+type Issue {
+    id: ID!
+    issueType: String!
+    status: String!
+    attachment: String
+    summary: String!
+    description: String
+    label: String!
+    priority: String!
+    taskId: Task!
+    assigneeId: User!
+    reporterId: User!
+    viewerId: User!
+    qaId: User!
     sprintId: Sprint!
     comments: [Comment!]!
 }
@@ -49,7 +77,8 @@ type Comment {
     id: ID!
     text: String!
     userId: User!
-    taskId: Task!
+    taskId: Task
+    issueId: Issue
 }
 
 type AuthPayload {
@@ -123,6 +152,7 @@ input CreateTaskInput {
     attachment: String
     assigneeId: ID!
     sprintId: ID!
+    reporterId: ID!
 }
 
 
@@ -133,7 +163,32 @@ input UpdateDescriptionInput {
 input CreateCommentInput {
     text: String!
     userId: ID!
+    taskId: ID
+    issueId: ID
+}
+
+input UpdateCommentInput {
+    text: String
+}
+
+input UpdateTaskStatusInput {
+    status: String!
+}
+
+input CreateIssueInput {
+    issueType: String!
+    status: String!
+    attachment: String
+    summary: String!
+    description: String
+    label: String!
+    priority: String!
     taskId: ID!
+    assigneeId: ID!
+    reporterId: ID!
+    viewerId: ID!
+    qaId: ID!
+    sprintId: ID!
 }
 
 type Mutation {
@@ -147,4 +202,9 @@ type Mutation {
     createTask(data: CreateTaskInput!): Task!
     updateDescription(id: String!, data: UpdateDescriptionInput!): DescPayload!
     createComment(data: CreateCommentInput!): Comment!
+    updateComment(id: String!, data: UpdateCommentInput!): Comment!
+    deleteComment(id: String!): Comment!
+    updateTaskStatus(id: String!, data: UpdateTaskStatusInput!): Task!
+    createIssue(data: CreateIssueInput!): Issue!
+    updateIssueDesc(id: String!, data: UpdateDescriptionInput!): DescPayload!
 }

@@ -17,8 +17,13 @@ model User {
   department   String?
   organization String?
   location     String?
-  tasks        Task[]
+  atTasks      Task[]    @relation(name: "Assignee")
+  rTasks       Task[]    @relation(name: "Reporter")
   comments     Comment[]
+  aIssues      Issue[]   @relation(name: "Assignee")
+  rIssues      Issue[]   @relation(name: "Reporter")
+  vIssues      Issue[]   @relation(name: "Viewer")
+  qaIssues     Issue[]   @relation(name: "QA")
 }
 
 model Sprint {
@@ -29,6 +34,7 @@ model Sprint {
   startDate   DateTime
   endDate     DateTime
   tasks       Task[]
+  issues      Issue[]
 }
 
 model Task {
@@ -40,18 +46,47 @@ model Task {
   estimatedTime DateTime?
   timeTaken     DateTime?
   assigneeId    Int
-  assignee      User      @relation(fields: [assigneeId], references: [id])
+  assignee      User      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  reporterId    Int
+  reporter      User      @relation(name: "Reporter", fields: [reporterId], references: [id])
   priority      String
   sprintId      Int
   sprint        Sprint    @relation(fields: [sprintId], references: [id])
-  comments       Comment[]
+  comments      Comment[]
+  issues        Issue[]
 }
 
 model Comment {
-  id     Int    @id @default(autoincrement())
-  text   String
-  userId Int
-  user   User   @relation(fields: [userId], references: [id])
-  taskId Int
-  task   Task   @relation(fields: [taskId], references: [id])
+  id      Int    @id @default(autoincrement())
+  text    String
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id])
+  taskId  Int?
+  task    Task?   @relation(fields: [taskId], references: [id])
+  issueId Int?
+  issue   Issue?  @relation(fields: [issueId], references: [id])
+}
+
+model Issue {
+  id          Int       @id @default(autoincrement())
+  issueType   String
+  taskId      Int
+  task        Task      @relation(fields: [taskId], references: [id])
+  sprintId    Int
+  sprint      Sprint    @relation(fields: [sprintId], references: [id])
+  status      String
+  summary     String
+  attachment  String?
+  description String?
+  label       String
+  priority    String
+  assigneeId  Int
+  assignee    User      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  reporterId  Int
+  reporter    User      @relation(name: "Reporter", fields: [reporterId], references: [id])
+  viewerId    Int
+  viewer      User      @relation(name: "Viewer", fields: [viewerId], references: [id])
+  qaId        Int
+  QA          User      @relation(name: "QA", fields: [qaId], references: [id])
+  comments    Comment[]
 }

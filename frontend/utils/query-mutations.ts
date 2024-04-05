@@ -109,6 +109,7 @@ export const SPRINT = gql`
       startDate
       endDate
       tasks {
+        id
         title
         priority
         status
@@ -156,6 +157,9 @@ export const TASKS = gql`
       assigneeId {
         id
       }
+      reporterId {
+        id
+      }
       sprintId {
         id
       }
@@ -172,6 +176,11 @@ export const TASK = gql`
       description
       status
       assigneeId {
+        id
+        name
+        imgUrl
+      }
+      reporterId {
         id
         name
         imgUrl
@@ -208,10 +217,6 @@ export const CREATE_COMMENT = gql`
     createComment(data: $data) {
       id
       text
-      taskId {
-        id
-        title
-      }
       userId {
         id
         name
@@ -221,3 +226,146 @@ export const CREATE_COMMENT = gql`
   }
 `;
 
+export const UPDATE_COMMENT = gql`
+  mutation updateComment($id: String!, $data: UpdateCommentInput!) {
+    updateComment(id: $id, data: $data) {
+      text
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation deleteComment($id: String!) {
+    deleteComment(id: $id) {
+      id
+      text
+    }
+  }
+`;
+
+export const UPDATE_STATUS = gql`
+  mutation updateTaskStatus($id: String!, $data: UpdateTaskStatusInput!) {
+    updateTaskStatus(id: $id, data: $data) {
+      status
+    }
+  }
+`;
+
+export const CREATE_ISSUE = gql`
+  mutation createIssue($data: CreateIssueInput!) {
+    createIssue(data: $data) {
+      id
+      label
+      status
+      summary
+      description
+      priority
+      issueType
+      attachment
+    }
+  }
+`;
+
+export const ISSUES = gql`
+  query {
+    issues {
+      id
+      issueType
+      status
+      taskId{
+        id
+      }
+      assigneeId {
+        id
+      }
+      reporterId {
+        id
+      }
+      viewerId {
+        id
+      }
+      qaId {
+        id
+      }
+      sprintId {
+        id
+      }
+      priority
+    }
+  }
+`;
+
+export const ISSUE = gql`
+  query issue($id: String!) {
+    issue(id: $id) {
+      id
+      issueType
+      status
+      summary
+      description
+      attachment
+      label
+      taskId{
+        id
+        title
+        description
+      }
+      assigneeId {
+        id
+        name
+        imgUrl
+      }
+      reporterId {
+        id
+        name
+        imgUrl
+      }
+      viewerId {
+        id
+        name
+        imgUrl
+      }
+      qaId {
+        id
+        name
+        imgUrl
+      }
+      sprintId {
+        id
+        title
+      }
+      priority
+      comments {
+        id
+        text
+        userId {
+          id
+          name
+          imgUrl
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_ISSUE_DESC = gql`
+  mutation updateIssueDesc($id: String!, $data: UpdateDescriptionInput!) {
+    updateIssueDesc(id: $id, data: $data) {
+      description
+    }
+  }
+`;
+
+// export const CREATE_ISSUE_COMMENT = gql`
+//   mutation createIssueComment($data: CreateIssueCommentInput!) {
+//     createIssueComment(data: $data) {
+//       id
+//       text
+//       userId {
+//         id
+//         name
+//         imgUrl
+//       }
+//     }
+//   }
+// `;

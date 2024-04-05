@@ -11,6 +11,7 @@ const Mutation = require("./resolvers/Mutation");
 const Task = require("./resolvers/Task");
 const Sprint = require("./resolvers/Sprint");
 const Comment = require("./resolvers/Comment");
+const Issue = require("./resolvers/Issue");
 
 const startServer = async() => {
     const app = express();
@@ -23,7 +24,7 @@ const startServer = async() => {
     const schema = fs.readFileSync("./schema.graphql", "utf8");
     const server = new ApolloServer({
         typeDefs: schema,
-        resolvers: { Query, Mutation, Task, Sprint, User, Comment }
+        resolvers: { Query, Mutation, Task, Sprint, User, Comment, Issue }
     });
 
     const { url } = await startStandaloneServer(server, {
