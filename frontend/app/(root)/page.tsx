@@ -21,7 +21,7 @@ export default function Home() {
     <div>
       <div className="text-end">
         <button
-          className="bg-pink-600 text-white px-3 py-2 rounded"
+          className="bg-sky-950 text-slate-200 px-3 py-2 rounded"
           onClick={showModalHandler}
         >
           Create sprint
@@ -33,34 +33,34 @@ export default function Home() {
           <CreateSprintModal setShowModal={setShowModal} />
         </>
       )}
-      {sprints?.length > 0 && (
-        <table className="mt-10 w-full">
-          <thead>
-            <tr>
-              <th className="text-left px-2">Id</th>
-              <th className="text-left px-2">Sprint Title</th>
-              <th className="text-left px-2">Start Date</th>
-              <th className="text-left px-2">End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sprints?.map((sprint: SprintProps) => (
+      <div className="max-sm:overflow-x-auto min-h-[80vh]">
+        {sprints?.length > 0 && (
+          <table className="mt-10 w-full max-sm:w-[40rem] text-sm">
+            <thead>
               <tr>
-                <td className="py-2 px-2">{sprint?.id}</td>
-                <td className="py-2 px-2">
-                  <Link href={`/sprints/${sprint?.id}`}>{sprint?.title}</Link>
-                </td>
-                <td className="py-2 px-2">
-                  {sprint?.startDate.split('T')[0]}
-                </td>
-                <td className="py-2 px-2">
-                  {sprint?.endDate.split('T')[0]}
-                </td>
+                <th className="text-left px-2">Id</th>
+                <th className="text-left px-2">Sprint Title</th>
+                <th className="text-left px-2">Start Date</th>
+                <th className="text-left px-2">End Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {sprints?.map((sprint: SprintProps) => (
+                <tr>
+                  <td className="py-2 px-2">{sprint?.id}</td>
+                  <td className="py-2 px-2">
+                    <Link href={`/sprints/${sprint?.id}`}>{sprint?.title}</Link>
+                  </td>
+                  <td className="py-2 px-2">
+                    {sprint?.startDate.split("T")[0]}
+                  </td>
+                  <td className="py-2 px-2">{sprint?.endDate.split("T")[0]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

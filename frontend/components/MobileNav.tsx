@@ -1,8 +1,14 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const MobileNav = () => {
+const MobileNav = ({
+  setShowModal,
+}: {
+  setShowModal: (show: boolean) => void;
+}) => {
   const [showLinks, setShowLinks] = useState(false);
+  const router = useRouter();
   const showLinksHandler = () => {
     setShowLinks(!showLinks);
   };
@@ -29,25 +35,51 @@ const MobileNav = () => {
         </svg>
       </div>
       {showLinks && (
-        <ul className="absolute top-12 left-0 bg-gray-200 min-w-36 py-2 px-3 flex flex-col gap-3">
+        <ul className="absolute top-12 left-0 bg-slate-900 min-w-36 py-2 px-3 flex flex-col gap-3">
           <li>
-            <Link href="/your-work">Your work</Link>
+            <button onClick={e => {
+              e.preventDefault();
+              router.push("/your-work")
+              setShowLinks(false)
+            }}>Your work</button>
           </li>
           <li>
-            <Link href="/tasks">Tasks</Link>
+            <button onClick={e => {
+              e.preventDefault();
+              router.push("/tasks")
+              setShowLinks(false)
+            }}>Tasks</button>
           </li>
           <li>
-            <Link href="/issues">Issues</Link>
+            <button onClick={e => {
+              e.preventDefault();
+              router.push("/issues")
+              setShowLinks(false)
+            }}>Issues</button>
           </li>
           <li>
-            <button className="text-lg bg-pink-600 text-white px-2.5 py-1 hidden max-sm:block">
+            <button
+              className="text-lg bg-sky-900 text-white px-2.5 py-1 hidden max-sm:block"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+                setShowLinks(false)
+              }}
+            >
               Create
             </button>
           </li>
         </ul>
       )}
 
-      <button className="py-0.5 px-2.5 text-lg bg-pink-600 text-white max-sm:hidden">
+      <button
+        className="py-0.5 px-2.5 text-lg bg-sky-950 text-slate-200 max-sm:hidden"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowModal(true);
+          
+        }}
+      >
         +
       </button>
     </div>

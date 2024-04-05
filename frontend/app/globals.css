@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body {
+  @apply bg-slate-950 text-slate-300 
+}
+
 input,
 textarea,
 select {
-  @apply w-full py-2 px-3 border mb-2 placeholder:text-gray-500 text-sm outline-none;
+  @apply w-full text-slate-700 py-2 px-3 bg-slate-900 mb-2 placeholder:text-gray-600 text-sm outline-none;
 }
 
 input,
@@ -26,7 +31,7 @@ select {
 }
 
 .backdrop {
-  @apply absolute inset-0 w-full bg-[#00000054] z-30
+  @apply absolute inset-0 w-full bg-[#00000046] z-30
 }
 
 .desc-list-style ul {
@@ -57,3 +62,15 @@ select {
 .desc-list-style a {
   @apply text-sky-600 underline
 }
+/* 
+.high {
+  @apply w-[26px] h-[26px]
+}
+
+.higher {
+  @apply w-3 h-3 ml-1.5
+}
+
+.highest {
+  @apply w-5 h-5 ml-1
+} */

@@ -1,6 +1,7 @@
 "use client"
 
 import useCurrentUser from "@/context/CurrentUserContext";
+import { HighPriorityIcon, HigherPriorityIcon, HighestPriorityIcon } from "@/icons/icons";
 import { TaskProps } from "@/types/types";
 import { TASKS } from "@/utils/query-mutations";
 import { useQuery } from "@apollo/client";
@@ -11,9 +12,9 @@ const YourWork = () => {
   const { data } = useQuery(TASKS);
   const filterTaskByUser = data?.tasks?.filter((task: TaskProps) => task?.assigneeId?.id === user?.id)
   return (
-    <>
+    <div className="max-sm:overflow-x-auto min-h-[87vh]">
       {filterTaskByUser?.length > 0 ? (
-        <table className="mt-2 w-full max-w-2xl mx-auto">
+        <table className="mt-2 w-full max-w-2xl max-sm:w-[30rem] mx-auto">
           <thead>
             <tr>
               <th className="py-1">Id</th>
@@ -26,22 +27,18 @@ const YourWork = () => {
             {data?.tasks
               .filter((task: TaskProps) => task.assigneeId?.id === user?.id)
               .map((task: TaskProps) => (
-                <tr className="border-b">
+                <tr className="border-b border-slate-800">
                   <td className="text-center py-1 text-sm">{task?.id}</td>
-                  <td className="text-center py-1 text-sm text-sky-700">
+                  <td className="text-center py-1 text-sm text-sky-500">
                     {task?.title}
                   </td>
-                  <td className="text-center py-1 text-sm text-slate-600">
+                  <td className="text-center py-1 text-sm">
                     {task?.assigneeId?.name || user?.name}
                   </td>
-                  <td className="text-center py-1">
-                    <Image
-                      className="mx-auto"
-                      src={`/assets/${task?.priority}.png`}
-                      alt="priority"
-                      width={20}
-                      height={20}
-                    />
+                  <td className="flex justify-center py-1">
+                    {task?.priority === "high" && <HighPriorityIcon />}
+                    {task?.priority === "highest" && <HigherPriorityIcon />}
+                    {task?.priority === "major" && <HighestPriorityIcon />}
                   </td>
                 </tr>
               ))}
@@ -50,7 +47,7 @@ const YourWork = () => {
       ) : (
         <div className="text-center">You haven't been assigned any task.</div>
       )}
-    </>
+    </div>
   );
 };
 
