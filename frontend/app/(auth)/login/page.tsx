@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import cookie from "@/utils/cookie";
 import { LOGIN_USER } from "@/utils/query-mutations";
@@ -14,7 +14,7 @@ const Login = () => {
   const [loginUserMutation, { error: graphqlError }] = useMutation(LOGIN_USER);
   const router = useRouter();
 
-  const loginUserHandler = async(e: MouseEvent<HTMLFormElement>) => {
+  const loginUserHandler = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (!email.trim() || !password.trim()) {
@@ -31,43 +31,49 @@ const Login = () => {
       }
       const { data } = await loginUserMutation({
         variables: {
-          data: { email, password }
-        }
-      })
-      cookie.set('token', data.loginUser.token);
+          data: { email, password },
+        },
+      });
+      cookie.set("token", data.loginUser.token);
       setEmail("");
       setPassword("");
-      
-      router.push('/')
 
+      router.push("/");
     } catch (error: any) {
-
-      if(graphqlError?.graphQLErrors && graphqlError.graphQLErrors.length > 0) {
+      if (
+        graphqlError?.graphQLErrors &&
+        graphqlError.graphQLErrors.length > 0
+      ) {
         const err = graphqlError.graphQLErrors[0].message;
-        setErrorMessage(err)
+        setErrorMessage(err);
       }
 
-      setErrorMessage(error.message)
+      setErrorMessage(error.message);
     }
-  }
-  
+  };
+
   return (
     <div className="max-w-md mx-auto flexCenter flex-col h-dvh">
       <form className="w-full mt-7" onSubmit={loginUserHandler}>
         <input
+          className="text-slate-400"
           type="email"
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className="text-slate-400"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         {errorMessage && <p className="text-red-400">{errorMessage}</p>}
-        <button type="submit" className="w-full py-2 px-3 mt-2 bg-pink-600 text-white">
+        <button
+          type="submit"
+          className="w-full py-2 px-3 mt-2 bg-sky-950 text-white"
+        >
           Login
         </button>
         <div></div>

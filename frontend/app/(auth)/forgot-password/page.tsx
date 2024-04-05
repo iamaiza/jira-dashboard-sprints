@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { FORGOT_PASSWORD } from "@/utils/query-mutations";
 import { useMutation } from "@apollo/client";
@@ -8,7 +8,8 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [forgotPasswordMutation, { error: graphqlError }] = useMutation(FORGOT_PASSWORD)
+  const [forgotPasswordMutation, { error: graphqlError }] =
+    useMutation(FORGOT_PASSWORD);
 
   const submitHandler = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,31 +21,33 @@ const ForgotPassword = () => {
       const { data } = await forgotPasswordMutation({
         variables: {
           data: {
-            email
-          }
-        }
-      })
+            email,
+          },
+        },
+      });
       console.log(data);
-      
-      setMsg(data.forgotPassword.message)
+
+      setMsg(data.forgotPassword.message);
     } catch (error: any) {
-      if(graphqlError?.graphQLErrors && graphqlError.graphQLErrors.length > 0) {
+      if (
+        graphqlError?.graphQLErrors &&
+        graphqlError.graphQLErrors.length > 0
+      ) {
         const err = graphqlError.graphQLErrors[0].message;
-        setErrorMessage(err)
+        setErrorMessage(err);
       }
-      setErrorMessage(error.message)
+      setErrorMessage(error.message);
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto flexCenter flex-col h-dvh">
       {msg ? (
-        <div className="flexCenter gap-2.5">
-          {msg}.
-        </div>
+        <div className="flexCenter gap-2.5">{msg}.</div>
       ) : (
         <form className="w-full mt-7" onSubmit={submitHandler}>
           <input
+            className="text-slate-400"
             type="email"
             placeholder="Email Address"
             value={email}
@@ -52,7 +55,10 @@ const ForgotPassword = () => {
             autoFocus
           />
           {errorMessage && <p className="text-red-400">{errorMessage}</p>}
-          <button type="submit" className="bg-pink-600 text-white w-full py-2 px-3">
+          <button
+            type="submit"
+            className="bg-slate-950 text-white w-full py-2 px-3"
+          >
             Continue
           </button>
         </form>
