@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import cookie from "@/utils/cookie";
 import { REGISTER_USER } from "@/utils/query-mutations";
@@ -18,8 +18,9 @@ const Registration = () => {
     organization: "",
     location: "",
   }));
-  const router = useRouter()
-  const [registerUserMutation, { error: graphqlError }] = useMutation(REGISTER_USER)
+  const router = useRouter();
+  const [registerUserMutation, { error: graphqlError }] =
+    useMutation(REGISTER_USER);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ const Registration = () => {
     }));
   };
 
-  const registerUserHandler = async(e: MouseEvent<HTMLFormElement>) => {
+  const registerUserHandler = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const {
@@ -41,9 +42,10 @@ const Registration = () => {
         jobTitle,
         department,
         organization,
-        location
+        location,
       } = state;
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/;
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/;
 
       if (!name.trim() || !email.trim() || !password.trim()) {
         setErrorMessage("Fields cannot be empty");
@@ -54,18 +56,27 @@ const Registration = () => {
         return;
       }
       if (!passwordRegex.test(password)) {
-        setErrorMessage("Password should be at least 6 characters long and must contain letters, symbols and digits");
+        setErrorMessage(
+          "Password should be at least 6 characters long and must contain letters, symbols and digits"
+        );
         return;
       }
 
       const { data } = await registerUserMutation({
-          variables: {
-            data: {
-              name, email, password, imgUrl, jobTitle, department, organization, location
-            }
-          }
-      })
-      cookie.set('token', data.registerUser.token)
+        variables: {
+          data: {
+            name,
+            email,
+            password,
+            imgUrl,
+            jobTitle,
+            department,
+            organization,
+            location,
+          },
+        },
+      });
+      cookie.set("token", data.registerUser.token);
       setState(() => ({
         name: "",
         email: "",
@@ -74,22 +85,26 @@ const Registration = () => {
         jobTitle: "",
         department: "",
         organization: "",
-        location: ""
+        location: "",
       }));
-      router.push('/')
+      router.push("/");
     } catch (error: any) {
-      if(graphqlError?.graphQLErrors && graphqlError.graphQLErrors.length > 0) {
-        const err = graphqlError.graphQLErrors[0].message
-        setErrorMessage(err)
+      if (
+        graphqlError?.graphQLErrors &&
+        graphqlError.graphQLErrors.length > 0
+      ) {
+        const err = graphqlError.graphQLErrors[0].message;
+        setErrorMessage(err);
       }
       setErrorMessage(error.message);
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto flexCenter flex-col h-dvh">
       <form className="w-full mt-7" onSubmit={registerUserHandler}>
         <input
+          className="text-slate-400"
           type="text"
           name="name"
           placeholder="Name"
@@ -97,6 +112,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="email"
           name="email"
           placeholder="Email Address"
@@ -104,6 +120,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="password"
           name="password"
           placeholder="Password"
@@ -111,6 +128,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="text"
           name="imgUrl"
           placeholder="Image Url (Optional)"
@@ -118,6 +136,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="text"
           name="jobTitle"
           placeholder="Job Title (Optional)"
@@ -125,6 +144,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="text"
           name="department"
           placeholder="Department (Optional)"
@@ -132,6 +152,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="text"
           name="organization"
           placeholder="Organization (Optional)"
@@ -139,6 +160,7 @@ const Registration = () => {
           onChange={handleChange}
         />
         <input
+          className="text-slate-400"
           type="text"
           name="location"
           placeholder="Location (Optional)"
@@ -146,7 +168,10 @@ const Registration = () => {
           onChange={handleChange}
         />
         {errorMessage && <p className="text-red-400">{errorMessage}</p>}
-        <button type="submit" className="bg-pink-600 text-white w-full py-2 px-3 mt-2">
+        <button
+          type="submit"
+          className="bg-sky-950 text-white w-full py-2 px-3 mt-2"
+        >
           Register
         </button>
         <div className="text-center mt-2 flexCenter gap-2 text-sm">

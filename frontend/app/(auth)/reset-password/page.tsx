@@ -11,22 +11,28 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const [resetPasswordMutation, { error: graphqlError }] = useMutation(RESET_PASSWORD)
+  const [resetPasswordMutation, { error: graphqlError }] =
+    useMutation(RESET_PASSWORD);
   const token = cookie.get("token");
-  const searchParams = useSearchParams()
-  const email = searchParams.get('email')
-  
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
 
   const resetPasswordHandler = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/;
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/;
       if (!newPassword.trim() || !confirmPassword.trim()) {
         setError("Fields cannot be empty");
         return;
       }
-      if (!passwordRegex.test(newPassword) || !passwordRegex.test(confirmPassword)) {
-        setError("Password must be at least 6 characters and must contain letters, symbols and digits only.");
+      if (
+        !passwordRegex.test(newPassword) ||
+        !passwordRegex.test(confirmPassword)
+      ) {
+        setError(
+          "Password must be at least 6 characters and must contain letters, symbols and digits only."
+        );
         return;
       }
       if (newPassword.length !== confirmPassword.length) {
@@ -38,28 +44,31 @@ const ResetPassword = () => {
         variables: {
           email,
           data: {
-            newPassword, confirmPassword
-          }
-        }
-      })
+            newPassword,
+            confirmPassword,
+          },
+        },
+      });
 
-      if(data.resetPassword.message !== "Success") {
+      if (data.resetPassword.message !== "Success") {
         setError(data.resetPassword.message);
       }
-      setNewPassword('')
-      setConfirmPassword('')
-      
-      if(token) router.push("/")
-      else router.push("/login")
+      setNewPassword("");
+      setConfirmPassword("");
 
+      if (token) router.push("/");
+      else router.push("/login");
     } catch (error: any) {
-      if(graphqlError?.graphQLErrors && graphqlError.graphQLErrors.length > 0) {
+      if (
+        graphqlError?.graphQLErrors &&
+        graphqlError.graphQLErrors.length > 0
+      ) {
         const err = graphqlError.graphQLErrors[0].message;
-        setError(err)
+        setError(err);
       }
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto flexCenter flex-col h-dvh">
@@ -67,12 +76,14 @@ const ResetPassword = () => {
         {token && <input type="password" placeholder="Password" readOnly />}
 
         <input
+          className="text-slate-400"
           type="password"
           placeholder="New Password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
         <input
+          className="text-slate-400"
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
@@ -81,7 +92,7 @@ const ResetPassword = () => {
         {error && <p className="text-red-400">{error}</p>}
         <button
           type="submit"
-          className="bg-pink-600 text-white w-full py-2 px-3"
+          className="bg-sky-950 text-white w-full py-2 px-3"
         >
           Reset
         </button>
