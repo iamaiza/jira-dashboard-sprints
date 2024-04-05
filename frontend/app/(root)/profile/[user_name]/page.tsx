@@ -12,12 +12,12 @@ const Profile = () => {
   const { user } = useCurrentUser();
   const { data } = useQuery(TASKS);
   return (
-    <div className="mt-32 max-w-5xl mx-auto flex justify-start items-start gap-3">
+    <div className="mt-32 mb-5 max-w-5xl mx-auto flex justify-start items-start gap-3">
       <div className="max-w-[17rem] w-full">
         <div>
           {user?.imgUrl ? (
             <Image
-              className="rounded-full border-4"
+              className="rounded-full border-4 border-slate-900"
               src={user?.imgUrl}
               alt="user-img"
               width={128}
@@ -29,10 +29,10 @@ const Profile = () => {
             </div>
           )}
         </div>
-        <div className="text-[1.7rem] font-semibold text-gray-600 mt-4">
+        <div className="text-[1.7rem] font-semibold text-gray-500 mt-4">
           {user?.name}
         </div>
-        <div className="mt-9 shadow-sm shadow-gray-300 w-full p-5">
+        <div className="mt-9 shadow-2xl w-full p-5">
           <div>
             <span className="uppercase text-xs tracking-widest font-bold text-gray-500">
               about
@@ -64,10 +64,10 @@ const Profile = () => {
             {data?.tasks
               .filter((task: TaskProps) => task.assigneeId?.id === user?.id)
               .map((task: TaskProps) => (
-                <tr className="border-b">
+                <tr className="border-b border-slate-800">
                   <td className="text-center py-1 text-sm">{task?.id}</td>
-                  <td className="text-center py-1 text-sm text-sky-700">{task?.title}</td>
-                  <td className="text-center py-1 text-sm text-slate-600">
+                  <td className="text-center py-1 text-sm text-sky-500">{task?.title}</td>
+                  <td className="text-center py-1 text-sm">
                     {task?.assigneeId?.name || user?.name}
                   </td>
                   <td className="text-center py-1">

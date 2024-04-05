@@ -20,7 +20,7 @@ const UserInputs = () => {
     organization: "",
     location: "",
   }));
-  
+
   const [isFocused, setIsFocused] = useState(false);
   const [isClicked, setIsClicked] = useState<string | null>(null);
   const [updateUserMutation] = useMutation(UPDATE_USER, {
@@ -30,17 +30,17 @@ const UserInputs = () => {
   });
   const [deleteUserMutation] = useMutation(DELETE_USER, {
     variables: {
-      id: user?.id
-    }
+      id: user?.id,
+    },
   });
   useEffect(() => {
-    if(user) {
+    if (user) {
       setState({
         jobTitle: user.jobTitle,
         department: user.department,
         organization: user.organization,
-        location: user.location
-      })
+        location: user.location,
+      });
     }
     document.addEventListener("click", handleClick);
     return () => {
@@ -81,16 +81,16 @@ const UserInputs = () => {
         variables: {
           data: {
             field: fieldName,
-            value: ""
-          }
-        }
-      })
-      
+            value: "",
+          },
+        },
+      });
+
       setState((prevState) => ({
-          ...prevState,
-          [fieldName]: "",
-        }));
-        setIsFocused(false);
+        ...prevState,
+        [fieldName]: "",
+      }));
+      setIsFocused(false);
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +112,7 @@ const UserInputs = () => {
       <div className="flexCenter gap-3 relative">
         <BagIcon />
         <input
-          className="bg-transparent hover:bg-gray-200 focus:bg-gray-200 py-1.5 mb-0 cursor-default focus:cursor-text input-focus"
+          className="bg-transparent text-slate-400 hover:bg-slate-900 focus:bg-slate-900 py-1.5 mb-0 cursor-default focus:cursor-text input-focus border-slate-900"
           type="text"
           name="jobTitle"
           placeholder="Your job title"
@@ -126,13 +126,13 @@ const UserInputs = () => {
         {isFocused && isClicked === "jobTitle" && (
           <div className="flexCenter gap-1 absolute right-0 top-9 z-10">
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={() => deleteStateValuesInDB("jobTitle")}
             >
               <XIcon className="stroke-gray-400 w-4 h-4" />
             </div>
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={updateStateValuesInDB}
             >
               <CheckIcon className="stroke-gray-400 w-4 h-4" />
@@ -143,7 +143,7 @@ const UserInputs = () => {
       <div className="flexCenter gap-3 relative">
         <BranchIcon />
         <input
-          className="bg-transparent hover:bg-gray-200 focus:bg-gray-200 py-1.5 mb-0 cursor-default focus:cursor-text input-focus"
+          className="bg-transparent text-slate-400 hover:bg-slate-900 focus:bg-slate-900 py-1.5 mb-0 cursor-default focus:cursor-text input-focus border-slate-900"
           type="text"
           name="department"
           placeholder="Your department"
@@ -157,13 +157,13 @@ const UserInputs = () => {
         {isFocused && isClicked === "department" && (
           <div className="flexCenter gap-1 absolute right-0 top-9 z-10">
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={() => deleteStateValuesInDB("department")}
             >
               <XIcon className="stroke-gray-400 w-4 h-4" />
             </div>
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={updateStateValuesInDB}
             >
               <CheckIcon className="stroke-gray-400 w-4 h-4" />
@@ -174,7 +174,7 @@ const UserInputs = () => {
       <div className="flexCenter gap-3 relative">
         <BuildingIcon />
         <input
-          className="bg-transparent hover:bg-gray-200 focus:bg-gray-200 py-1.5 mb-0 cursor-default focus:cursor-text input-focus"
+          className="bg-transparent text-slate-400 hover:bg-slate-900 focus:bg-slate-900 py-1.5 mb-0 cursor-default focus:cursor-text input-focus border-slate-900"
           type="text"
           name="organization"
           placeholder="Your organization"
@@ -188,13 +188,13 @@ const UserInputs = () => {
         {isFocused && isClicked === "organization" && (
           <div className="flexCenter gap-1 absolute right-0 top-9 z-10">
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={() => deleteStateValuesInDB("organization")}
             >
               <XIcon className="stroke-gray-400 w-4 h-4" />
             </div>
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={updateStateValuesInDB}
             >
               <CheckIcon className="stroke-gray-400 w-4 h-4" />
@@ -205,7 +205,7 @@ const UserInputs = () => {
       <div className="flexCenter gap-3 relative">
         <LocationIcon />
         <input
-          className="bg-transparent hover:bg-gray-200 focus:bg-gray-200 py-1.5 mb-0 cursor-default focus:cursor-text input-focus"
+          className="bg-transparent text-slate-400 hover:bg-slate-900 focus:bg-slate-900 py-1.5 mb-0 cursor-default focus:cursor-text input-focus border-slate-900"
           type="text"
           name="location"
           placeholder="Your location"
@@ -219,13 +219,13 @@ const UserInputs = () => {
         {isFocused && isClicked === "location" && (
           <div className="flexCenter gap-1 absolute right-0 top-9 z-10">
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={() => deleteStateValuesInDB("location")}
             >
               <XIcon className="stroke-gray-400 w-4 h-4" />
             </div>
             <div
-              className="bg-gray-200 py-2 px-2.5 rounded"
+              className="bg-slate-900 py-2 px-2.5 rounded"
               onClick={updateStateValuesInDB}
             >
               <CheckIcon className="stroke-gray-400 w-4 h-4" />
