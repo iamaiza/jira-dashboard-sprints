@@ -4,7 +4,7 @@ import DescCommentInput from "./desc-comment-input";
 import { CommentProps, TaskProps } from "@/types/types";
 import useCurrentUser from "@/context/CurrentUserContext";
 import { useMutation } from "@apollo/client";
-import { CREATE_COMMENT, UPDATE_DESCRIPTION } from "@/utils/query-mutations";
+import { CREATE_COMMENT, DELETE_COMMENT, UPDATE_DESCRIPTION } from "@/utils/query-mutations";
 import Comments from "./Comments";
 
 const TaskDetail1 = ({
@@ -30,6 +30,7 @@ const TaskDetail1 = ({
   });
   const [createCommentMutation] = useMutation(CREATE_COMMENT)
   const [comments, setComments] = useState<CommentProps[]>([]);
+  const [deleteCommentMutation] = useMutation(DELETE_COMMENT)
 
   useEffect(() => {
     if(task?.description) setDesc(task.description)
@@ -91,6 +92,15 @@ const TaskDetail1 = ({
     }
   }
 
+  const deleteCommentHandler = async(commentId: string) => {
+    await deleteCommentMutation({
+      variables: {
+        id: commentId
+      }
+    })
+    setComments(comments.filter(comment => comment.id !== commentId))
+  }
+
   return (
     <div className=" max-w-4xl w-full">
       <h1 className="font-semibold text-2xl">{task?.title}</h1>
@@ -101,13 +111,13 @@ const TaskDetail1 = ({
             <DescCommentInput state={desc} handleChange={handleChange} />
             <div className="mt-4 flexStart gap-2">
               <button
-                className="bg-pink-600 text-white px-3 py-2"
+                className="bg-sky-950 text-slate-200 px-3 py-2"
                 onClick={updateDescHandler}
               >
                 Save
               </button>
               <button
-                className="px-3 py-2 hover:bg-gray-200"
+                className="px-3 py-2 hover:bg-slate-800"
                 onClick={hideEditor}
               >
                 Cancel
@@ -116,7 +126,7 @@ const TaskDetail1 = ({
           </div>
         ) : (
           <div
-            className="w-full min-h-10 p-2 text-sm hover:bg-gray-100 mt-2 cursor-default rounded"
+            className="w-full min-h-10 p-2 text-sm hover:bg-slate-900 mt-2 cursor-default rounded"
             onClick={showDescEditor}>{getDescInHTMLFormat()}</div>
         )}
       </div>
@@ -134,7 +144,7 @@ const TaskDetail1 = ({
             height={32}
           />
         ) : (
-          <div className="uppercase tracking-widest w-9 h-9 bg-sky-900 rounded-full flexCenter text-[13px] font-bold">
+          <div className="uppercase tracking-widest w-9 h-9 bg-slate-900 rounded-full flexCenter text-[13px] font-bold">
             {user?.name.substr(0, 2)}
           </div>
         )}
@@ -144,13 +154,13 @@ const TaskDetail1 = ({
               <DescCommentInput state={comment} handleChange={handleChange} />
               <div className="mt-4 flexStart gap-2">
                 <button
-                  className="bg-pink-600 text-white px-3 py-2"
+                  className="bg-sky-950 text-slate-200 px-3 py-2"
                   onClick={createCommentHandler}
                 >
                   Save
                 </button>
                 <button
-                  className="px-3 py-2 hover:bg-gray-200"
+                  className="px-3 py-2 hover:bg-slate-800"
                   onClick={hideEditor}
                 >
                   Cancel
@@ -159,7 +169,7 @@ const TaskDetail1 = ({
             </div>
           ) : (
             <div
-              className="w-full h-10 p-2 text-sm hover:bg-gray-100 cursor-default rounded"
+              className="w-full h-10 p-2 text-sm hover:bg-slate-900 cursor-default rounded"
               children="Add comment"
               onClick={showCommentEditor}
             ></div>
@@ -167,7 +177,7 @@ const TaskDetail1 = ({
         </div>
       </div>
       {comments?.map((comment) => (
-        <Comments comment={comment} />
+        <Comments comment={comment} deleteComment={deleteCommentHandler} />
       ))}
     </div>
   );

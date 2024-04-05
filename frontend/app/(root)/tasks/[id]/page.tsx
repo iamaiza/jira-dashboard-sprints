@@ -29,7 +29,7 @@ const TaskDetail = () => {
 
   return (
     <div>
-      <div className="flex justify-between gap-5">
+      <div className="flex justify-between gap-5 mb-5x">
         <TaskDetail1
           task={task}
           showEditor={showEditor}
