@@ -30,7 +30,13 @@ const Query = {
         return sprint;
     },
     tasks: async(_, args, { prisma }) => {
-        const tasks = await prisma.task.findMany();
+        const tasks = await prisma.task.findMany({
+            orderBy: [
+                {
+                    title: "asc"
+                }
+            ]
+        });
         return tasks;
     },
     task: async(_, args, { prisma }) => {
@@ -40,6 +46,18 @@ const Query = {
             return { message: "No task found with this id" }
         }
         return task;
+    },
+    issues: async(_, args, { prisma }) => {
+        const issues = await prisma.issue.findMany();
+        return issues;
+    },
+    issue: async(_, args, { prisma }) => {
+        const id = args.id;
+        const issue = await prisma.issue.findUnique({ where: { id: parseInt(id) } })
+        if(!issue) {
+            return { message: "No issue found with this id" }
+        }
+        return issue;
     }
 }
 

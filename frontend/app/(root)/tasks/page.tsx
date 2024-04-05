@@ -21,7 +21,7 @@ const Tasks = () => {
     <div className="">
       <div className="text-end">
         <button
-          className="bg-pink-600 text-white px-3 py-2 rounded"
+          className="bg-sky-950 text-slate-200 px-3 py-2 rounded"
           onClick={showModalHandler}
         >
           Create Task
@@ -34,43 +34,46 @@ const Tasks = () => {
           <CreateTaskModal setShowModal={setShowModal} />
         </>
       )}
-
-      {tasks?.length > 0 && (
-        <table className="mt-10 w-full">
-          <thead>
-            <tr>
-              <th className="px-2">Id</th>
-              <th className="px-2">Task Title</th>
-              <th className="px-2">Task Status</th>
-              <th className="px-2">Priority</th>
-              <th className="px-2">Assignee Id</th>
-              <th className="px-2">Sprint Id</th>
-              <th className="px-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks?.map((task: TaskProps) => (
-              <tr key={task?.id}>
-                <td className="py-2 px-2 text-center">{task?.id}</td>
-                <td className="py-2 px-2 text-center">
-                  <Link href={`/tasks/${task?.id}`}>
-                    {task?.title.substr(0, 25)}...
-                  </Link>
-                </td>
-                <td className="py-2 px-2 text-center">{task?.status}</td>
-                <td className="py-2 px-2 text-center">{task?.priority}</td>
-                <td className="py-2 px-2 text-center">
-                  {task?.assigneeId?.id}
-                </td>
-                <td className="py-2 px-2 text-center">{task?.sprintId?.id}</td>
-                <td className="py-2 px-2 text-center">
-                  <DeleteIcon className="w-5 h-5 mx-auto stroke-red-400" />
-                </td>
+      <div className="max-md:overflow-x-auto min-h-[80vh]">
+        {tasks?.length > 0 && (
+          <table className="mt-10 w-full text-sm max-md:w-[45rem]">
+            <thead>
+              <tr>
+                <th className="px-2">Id</th>
+                <th className="px-2">Task Title</th>
+                <th className="px-2">Task Status</th>
+                <th className="px-2">Priority</th>
+                <th className="px-2">Assignee Id</th>
+                <th className="px-2">Reporter Id</th>
+                <th className="px-2">Sprint Id</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {tasks?.map((task: TaskProps) => (
+                <tr key={task?.id}>
+                  <td className="py-2 px-2 text-center">{task?.id}</td>
+                  <td className="py-2 px-2 text-center">
+                    <Link href={`/tasks/${task?.id}`}>
+                      {task?.title.substr(0, 25)}...
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2 text-center">{task?.status}</td>
+                  <td className="py-2 px-2 text-center">{task?.priority}</td>
+                  <td className="py-2 px-2 text-center">
+                    {task?.assigneeId?.id}
+                  </td>
+                  <td className="py-2 px-2 text-center">
+                    {task?.reporterId?.id}
+                  </td>
+                  <td className="py-2 px-2 text-center">
+                    {task?.sprintId?.id}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
