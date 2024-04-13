@@ -346,32 +346,36 @@ const Mutation = {
       return { message: "Sprint not found" };
     }
 
-    // if (
-    //   assigneeId === task?.assigneeId?.id &&
-    //   sprintId === task?.sprintId?.id &&
-    //   priority === task?.priority
-    // ) {
-      const issue = await prisma.issue.create({
-        data: {
-          issueType,
-          status,
-          attachment,
-          description,
-          label,
-          priority,
-          taskId: parseTaskId,
-          assigneeId: parseAssigneeId,
-          reporterId: parseReporterId,
-          viewerId: parseReviewerId,
-          qaId: parseQaId,
-          sprintId: parseSprintId,
-          summary,
-        },
-      });
-      return issue;
-    // } else {
-    //   return { message: "Invalid data" };
-    // }
+    const issue = await prisma.issue.create({
+      data: {
+        issueType,
+        status,
+        attachment,
+        description,
+        label,
+        priority,
+        taskId: parseTaskId,
+        assigneeId: parseAssigneeId,
+        reporterId: parseReporterId,
+        viewerId: parseReviewerId,
+        qaId: parseQaId,
+        sprintId: parseSprintId,
+        summary,
+      },
+    });
+
+    await prisma.task.update({
+      where: { id: parseTaskId },
+      data: {
+        status,
+        reporterId: parseReporterId,
+        priority,
+        assigneeId: parseAssigneeId,
+        sprintId: parseSprintId,
+      },
+    });
+
+    return issue;
   },
   updateIssueDesc: async (_, args, { prisma }) => {
     const id = args.id;
@@ -389,6 +393,56 @@ const Mutation = {
     });
 
     return updatedDesc;
+  },
+  updateTitle: async (_, args, { prisma }) => {
+    const { title, taskId } = args.data;
+    const parseTaskId = parseInt(taskId);
+    const task = await prisma.task.findUnique({
+      where: { id: parseTaskId },
+    });
+    if (!task) {
+      return { message: "Task not found" };
+    }
+
+    const updatedTitle = await prisma.task.update({
+      where: { id: parseTaskId },
+      data: { title },
+    });
+    console.log(updatedTitle);
+    return updatedTitle;
+  },
+  updateStatus: async (_, args, { prisma }) => {
+    const { status, taskId } = args.data;
+    const parseTaskId = parseInt(taskId);
+    const task = await prisma.task.findUnique({
+      where: { id: parseTaskId },
+    });
+    if (!task) {
+      return { message: "Task not found" };
+    }
+
+    const updatedStatus = await prisma.task.update({
+      where: { id: parseTaskId },
+      data: { status },
+    });
+    console.log(updatedStatus);
+    return updatedStatus;
+  },
+  updateSprintTitle: async (_, args, { prisma }) => {
+    const { title, id } = args.data;
+    const parseSprintId = parseInt(id);
+    const sprint = await prisma.sprint.findUnique({
+      where: { id: parseSprintId },
+    });
+    if (!sprint) {
+      return { message: "Sprint not found" };
+    }
+    const updatedTitle = await prisma.sprint.update({
+      where: { id: parseSprintId },
+      data: { title },
+    });
+
+    return updatedTitle;
   },
 };
 

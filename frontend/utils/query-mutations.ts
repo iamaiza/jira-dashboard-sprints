@@ -274,6 +274,8 @@ export const ISSUES = gql`
       status
       taskId{
         id
+        title
+        status
       }
       assigneeId {
         id
@@ -309,6 +311,7 @@ export const ISSUE = gql`
         id
         title
         description
+        status
       }
       assigneeId {
         id
@@ -333,6 +336,7 @@ export const ISSUE = gql`
       sprintId {
         id
         title
+        status
       }
       priority
       comments {
@@ -356,16 +360,29 @@ export const UPDATE_ISSUE_DESC = gql`
   }
 `;
 
-// export const CREATE_ISSUE_COMMENT = gql`
-//   mutation createIssueComment($data: CreateIssueCommentInput!) {
-//     createIssueComment(data: $data) {
-//       id
-//       text
-//       userId {
-//         id
-//         name
-//         imgUrl
-//       }
-//     }
-//   }
-// `;
+export const UPDATE_TITLE = gql`
+  mutation updateTitle($data: TitleInput!) {
+    updateTitle(data: $data) {
+      id
+      title
+    }
+  }
+`;
+
+export const UPDATE_TASK_STATUS = gql`
+  mutation updateStatus($data: UpdateStatusInput!) {
+    updateStatus(data: $data) {
+      taskId
+      status
+    }
+  }
+`;
+
+export const UPDATE_SPRINT_TITLE = gql`
+  mutation updateSprintTitle($data: TitleInput!) {
+    updateSprintTitle(data: $data) {
+      id,
+      title
+    }
+  }
+`;
