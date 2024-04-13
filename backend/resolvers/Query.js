@@ -18,7 +18,13 @@ const Query = {
         return users;
     },
     sprints: async(_, args, { prisma }) => {
-        const sprints = await prisma.sprint.findMany();
+        const sprints = await prisma.sprint.findMany({
+            orderBy: [
+                {
+                    id: "asc"
+                }
+            ]
+        });
         return sprints;
     },
     sprint: async(_, args, { prisma }) => {
@@ -33,7 +39,7 @@ const Query = {
         const tasks = await prisma.task.findMany({
             orderBy: [
                 {
-                    title: "asc"
+                    id: "asc"
                 }
             ]
         });

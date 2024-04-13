@@ -36,7 +36,7 @@ const Tasks = () => {
       )}
       <div className="max-md:overflow-x-auto min-h-[80vh]">
         {tasks?.length > 0 && (
-          <table className="mt-10 w-full text-sm max-md:w-[45rem]">
+          <table className="mt-10 w-full text-sm max-md:w-[50rem]">
             <thead>
               <tr>
                 <th className="px-2">Id</th>
@@ -57,7 +57,7 @@ const Tasks = () => {
                       {task?.title.substr(0, 25)}...
                     </Link>
                   </td>
-                  <td className="py-2 px-2 text-center">{task?.status}</td>
+                  <td className="py-2 px-2 text-center capitalize">{task?.status}</td>
                   <td className="py-2 px-2 text-center">{task?.priority}</td>
                   <td className="py-2 px-2 text-center">
                     {task?.assigneeId?.id}
