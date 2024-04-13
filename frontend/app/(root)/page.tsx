@@ -33,7 +33,7 @@ export default function Home() {
           <CreateSprintModal setShowModal={setShowModal} />
         </>
       )}
-      <div className="max-sm:overflow-x-auto min-h-[80vh]">
+      <div className="max-sm:overflow-x-auto max-sm:min-h-[80vh]">
         {sprints?.length > 0 && (
           <table className="mt-10 w-full max-sm:w-[40rem] text-sm">
             <thead>
@@ -47,14 +47,22 @@ export default function Home() {
             <tbody>
               {sprints?.map((sprint: SprintProps) => (
                 <tr>
-                  <td className="py-2 px-2">{sprint?.id}</td>
                   <td className="py-2 px-2">
-                    <Link href={`/sprints/${sprint?.id}`}>{sprint?.title}</Link>
+                    <Link className="block w-full" href={`/sprints/${sprint?.id}`}>{sprint?.id}</Link>
                   </td>
                   <td className="py-2 px-2">
-                    {sprint?.startDate.split("T")[0]}
+                    <Link className="block w-full" href={`/sprints/${sprint?.id}`}>{sprint?.title}</Link>
                   </td>
-                  <td className="py-2 px-2">{sprint?.endDate.split("T")[0]}</td>
+                  <td className="py-2 px-2">
+                    <Link className="block w-full" href={`/sprints/${sprint?.id}`}>
+                      {sprint?.startDate.split("T")[0]}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2">
+                    <Link className="block w-full" href={`/sprints/${sprint?.id}`}>
+                      {sprint?.endDate.split("T")[0]}
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

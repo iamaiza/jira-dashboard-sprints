@@ -19,8 +19,8 @@ const CreateTaskModal = ({
     desc: "",
     priority: "high",
     fileUrl: "",
-    assignee: `${usersData?.users[0]?.id || "1"}`,
-    reporter: `${usersData?.users[0]?.id || "1"}`,
+    assignee: "none",
+    reporter: "none",
     sprint: `${data?.sprints[0]?.id || "1"}`,
   }));
   const [error, setError] = useState("");
@@ -140,7 +140,7 @@ const CreateTaskModal = ({
           <option value="highest">Highest</option>
         </select>
         <select className="bg-transparent border text-slate-600" name="assignee" value={state.assignee} onChange={handleChange}>
-          <option disabled>User</option>
+          <option value="none">None</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.name}
@@ -148,7 +148,7 @@ const CreateTaskModal = ({
           ))}
         </select>
         <select className="bg-transparent border text-slate-600" name="reporter" value={state.reporter} onChange={handleChange}>
-          <option disabled>User</option>
+          <option value="none">None</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.name}

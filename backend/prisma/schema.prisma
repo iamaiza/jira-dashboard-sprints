@@ -45,10 +45,10 @@ model Task {
   attachment    String?
   estimatedTime DateTime?
   timeTaken     DateTime?
-  assigneeId    Int
-  assignee      User      @relation(name: "Assignee", fields: [assigneeId], references: [id])
-  reporterId    Int
-  reporter      User      @relation(name: "Reporter", fields: [reporterId], references: [id])
+  assigneeId    Int?
+  assignee      User?      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  reporterId    Int?
+  reporter      User?      @relation(name: "Reporter", fields: [reporterId], references: [id])
   priority      String
   sprintId      Int
   sprint        Sprint    @relation(fields: [sprintId], references: [id])
@@ -80,13 +80,13 @@ model Issue {
   description String?
   label       String
   priority    String
-  assigneeId  Int
-  assignee    User      @relation(name: "Assignee", fields: [assigneeId], references: [id])
-  reporterId  Int
-  reporter    User      @relation(name: "Reporter", fields: [reporterId], references: [id])
-  viewerId    Int
-  viewer      User      @relation(name: "Viewer", fields: [viewerId], references: [id])
-  qaId        Int
-  QA          User      @relation(name: "QA", fields: [qaId], references: [id])
+  assigneeId  Int?
+  assignee    User?      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  reporterId  Int?
+  reporter    User?      @relation(name: "Reporter", fields: [reporterId], references: [id])
+  viewerId    Int?
+  viewer      User?      @relation(name: "Viewer", fields: [viewerId], references: [id])
+  qaId        Int?
+  QA          User?      @relation(name: "QA", fields: [qaId], references: [id])
   comments    Comment[]
 }

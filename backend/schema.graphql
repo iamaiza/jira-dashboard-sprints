@@ -47,8 +47,8 @@ type Task {
     description: String
     status: String!
     attachment: String
-    assigneeId: User!
-    reporterId: User!
+    assigneeId: User
+    reporterId: User
     priority: String!
     sprintId: Sprint!
     comments: [Comment!]!
@@ -65,10 +65,10 @@ type Issue {
     label: String!
     priority: String!
     taskId: Task!
-    assigneeId: User!
-    reporterId: User!
-    viewerId: User!
-    qaId: User!
+    assigneeId: User
+    reporterId: User
+    viewerId: User
+    qaId: User
     sprintId: Sprint!
     comments: [Comment!]!
 }
@@ -97,6 +97,16 @@ type DeleteUserPayload {
 
 type DescPayload {
     description: String
+}
+
+type TitlePayload {
+    title: String
+    id: String
+}
+
+type StatusPayload {
+    status: String
+    taskId: String
 }
 
 input RegisterUserInput {
@@ -150,9 +160,9 @@ input CreateTaskInput {
     status: String!
     priority: String!
     attachment: String
-    assigneeId: ID!
+    assigneeId: ID
     sprintId: ID!
-    reporterId: ID!
+    reporterId: ID
 }
 
 
@@ -184,11 +194,21 @@ input CreateIssueInput {
     label: String!
     priority: String!
     taskId: ID!
-    assigneeId: ID!
-    reporterId: ID!
-    viewerId: ID!
-    qaId: ID!
+    assigneeId: ID
+    reporterId: ID
+    viewerId: ID
+    qaId: ID
     sprintId: ID!
+}
+
+input TitleInput {
+    title: String
+    id: String
+}
+
+input UpdateStatusInput {
+    taskId: String,
+    status: String
 }
 
 type Mutation {
@@ -207,4 +227,7 @@ type Mutation {
     updateTaskStatus(id: String!, data: UpdateTaskStatusInput!): Task!
     createIssue(data: CreateIssueInput!): Issue!
     updateIssueDesc(id: String!, data: UpdateDescriptionInput!): DescPayload!
+    updateTitle(data: TitleInput!): TitlePayload!
+    updateStatus(data: UpdateStatusInput!): StatusPayload!
+    updateSprintTitle(data: TitleInput!): TitlePayload!
 }
