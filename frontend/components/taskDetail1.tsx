@@ -4,8 +4,14 @@ import DescCommentInput from "./desc-comment-input";
 import { CommentProps, TaskProps } from "@/types/types";
 import useCurrentUser from "@/context/CurrentUserContext";
 import { useMutation } from "@apollo/client";
-import { CREATE_COMMENT, DELETE_COMMENT, UPDATE_DESCRIPTION } from "@/utils/query-mutations";
+import {
+  CREATE_COMMENT,
+  DELETE_COMMENT,
+  UPDATE_DESCRIPTION,
+  UPDATE_TITLE,
+} from "@/utils/query-mutations";
 import Comments from "./Comments";
+import { CheckIcon, XIcon } from "@/icons/icons";
 
 const TaskDetail1 = ({
   task,
@@ -26,16 +32,23 @@ const TaskDetail1 = ({
   const [updateDescMutation] = useMutation(UPDATE_DESCRIPTION, {
     variables: {
       id: task?.id,
-    }
+    },
   });
-  const [createCommentMutation] = useMutation(CREATE_COMMENT)
+  const [createCommentMutation] = useMutation(CREATE_COMMENT);
   const [comments, setComments] = useState<CommentProps[]>([]);
-  const [deleteCommentMutation] = useMutation(DELETE_COMMENT)
+  const [deleteCommentMutation] = useMutation(DELETE_COMMENT);
+  const [title, setTitle] = useState("");
+  const [updateTitleMutation] = useMutation(UPDATE_TITLE);
+  const [showIcons, setShowIcons] = useState(false);
+  const [isUpdateTitle, setIsUpdatedTitle] = useState(false);
 
   useEffect(() => {
-    if(task?.description) setDesc(task.description)
-    if(task?.comments) setComments(task.comments)
-  }, [task?.description, task?.comments])
+    if (task?.description) setDesc(task.description);
+    if (task?.comments) setComments(task.comments);
+    if (task?.title) setTitle(task.title);
+
+
+  }, [task?.description, task?.comments, task?.title]);
 
   const handleChange = (value: string) => {
     if (showEditor === "desc") {
@@ -46,14 +59,14 @@ const TaskDetail1 = ({
   };
   const updateDescHandler = async () => {
     try {
-      if(!desc.trim()) return;
+      if (!desc.trim()) return;
       const { data } = await updateDescMutation({
         variables: {
           data: {
-            description: desc
-          }
-        }
-      })
+            description: desc,
+          },
+        },
+      });
       hideEditor();
     } catch (error) {
       console.log(error);
@@ -67,17 +80,17 @@ const TaskDetail1 = ({
   const formattedDesc = desc ? stripeHTMLTags(desc) : "";
   const createCommentHandler = async () => {
     try {
-      if(!comment.trim()) return;
+      if (!comment.trim()) return;
       const { data } = await createCommentMutation({
         variables: {
           data: {
             text: comment,
             taskId: task?.id,
-            userId: user?.id
-          }
-        }
-      })
-      setComments([...comments, data?.createComment])
+            userId: user?.id,
+          },
+        },
+      });
+      setComments([...comments, data?.createComment]);
       hideEditor();
     } catch (error) {
       console.log(error);
@@ -85,25 +98,84 @@ const TaskDetail1 = ({
   };
 
   const getDescInHTMLFormat = () => {
-    if(formattedDesc) {
-      return <div className="desc-list-style" dangerouslySetInnerHTML={{ __html: desc }} />
+    if (formattedDesc) {
+      return (
+        <div
+          className="desc-list-style"
+          dangerouslySetInnerHTML={{ __html: desc }}
+        />
+      );
     } else {
-      return <div children="Add description..." />
+      return <div children="Add description..." />;
     }
-  }
+  };
 
-  const deleteCommentHandler = async(commentId: string) => {
+  const deleteCommentHandler = async (commentId: string) => {
     await deleteCommentMutation({
       variables: {
-        id: commentId
-      }
-    })
-    setComments(comments.filter(comment => comment.id !== commentId))
-  }
+        id: commentId,
+      },
+    });
+    setComments(comments.filter((comment) => comment.id !== commentId));
+  };
+  const updateTitleHandler = async () => {
+    const { data } = await updateTitleMutation({
+      variables: {
+        data: {
+          title: title,
+          id: task?.id,
+        },
+      },
+    });
+    setTitle(data?.updateTitle?.title);
+    setIsUpdatedTitle(false);
+    console.log(data);
+  };
+  const deleteTitleHandler = () => {
+    setIsUpdatedTitle(false);
+  };
 
   return (
     <div className=" max-w-4xl w-full">
-      <h1 className="font-semibold text-2xl">{task?.title}</h1>
+      <div id="title">
+        {isUpdateTitle ? (
+          <div className="relative">
+            <textarea
+              className={`bg-transparent font-semibold text-2xl pl-0 h-fit text-slate-300 ${
+                isUpdateTitle && "pl-2 border border-slate-500"
+              }`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onFocus={() => setShowIcons(true)}
+              autoFocus={isUpdateTitle && true}
+            />
+            {showIcons && (
+              <div className="flexCenter gap-1 absolute right-0 top-full z-10">
+                <div
+                  className="bg-slate-900 py-2 px-2.5 rounded"
+                  onClick={deleteTitleHandler}
+                >
+                  <XIcon className="stroke-gray-400 w-4 h-4" />
+                </div>
+                <div
+                  className="bg-slate-900 py-2 px-2.5 rounded"
+                  onClick={updateTitleHandler}
+                >
+                  <CheckIcon className="stroke-gray-400 w-4 h-4" />
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <h1
+            className="font-semibold text-2xl"
+            onClick={() => setIsUpdatedTitle(true)}
+          >
+            {title}
+          </h1>
+        )}
+      </div>
+
       <div className="mt-8">
         <label className="font-bold">Description</label>
         {showEditor === "desc" ? (
@@ -127,7 +199,10 @@ const TaskDetail1 = ({
         ) : (
           <div
             className="w-full min-h-10 p-2 text-sm hover:bg-slate-900 mt-2 cursor-default rounded"
-            onClick={showDescEditor}>{getDescInHTMLFormat()}</div>
+            onClick={showDescEditor}
+          >
+            {getDescInHTMLFormat()}
+          </div>
         )}
       </div>
       <div

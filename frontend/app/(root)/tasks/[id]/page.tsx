@@ -28,8 +28,8 @@ const TaskDetail = () => {
   const hideEditor = () => setShowEditor(null);
 
   return (
-    <div>
-      <div className="flex justify-between gap-5 mb-5x">
+    <div className="max-lg:overflow-x-auto max-lg:min-h-[87vh]">
+      <div className="flex justify-between gap-5 mb-5 max-lg:w-[55rem]">
         <TaskDetail1
           task={task}
           showEditor={showEditor}
