@@ -38,31 +38,32 @@ const CreateIssueModal = ({
   const [createIssueMutation] = useMutation(CREATE_ISSUE, {
     refetchQueries: [{ query: ISSUES }],
   });
+
   const fileRef = useRef<HTMLInputElement>(null);
   const handleChange = (value: string) => {
     setDescription(value);
   };
-  const reporterInputChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    if (name === "reporter") {
-      setState((prevState) => ({
-        ...prevState,
-        reporter: value,
-      }));
-    }
-    if (name === "reviewer") {
-      setState((prevState) => ({
-        ...prevState,
-        reviewer: value,
-      }));
-    }
-    if (name === "qa") {
-      setState((prevState) => ({
-        ...prevState,
-        qa: value,
-      }));
-    }
-  };
+  // const reporterInputChangeHandler = async(e: ChangeEvent<HTMLSelectElement>) => {
+  //   const { name, value } = e.target;
+  //   if (name === "reporter") {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       reporter: value,
+  //     }));
+  //   }
+  //   if (name === "reviewer") {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       reviewer: value,
+  //     }));
+  //   }
+  //   if (name === "qa") {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       qa: value,
+  //     }));
+  //   }
+  // };
   const inputChangeHandler = (
     e: ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -72,17 +73,17 @@ const CreateIssueModal = ({
       [name]: value,
     }));
 
-    const selectedTask = tasksData?.tasks.find(
-      (task: TaskProps) => task.id === value
-    );
-    if (selectedTask) {
-      setState((prevState) => ({
-        ...prevState,
-        assignee: selectedTask?.assigneeId?.id,
-        sprint: selectedTask?.sprintId?.id,
-        priority: selectedTask?.priority,
-      }));
-    }
+    // const selectedTask = tasksData?.tasks.find(
+    //   (task: TaskProps) => task.id === value
+    // );
+    // if (selectedTask) {
+    //   setState((prevState) => ({
+    //     ...prevState,
+    //     assignee: selectedTask?.assigneeId?.id,
+    //     sprint: selectedTask?.sprintId?.id,
+    //     priority: selectedTask?.priority,
+    //   }));
+    // }
   };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -96,12 +97,6 @@ const CreateIssueModal = ({
       };
 
       reader.readAsDataURL(file);
-
-      // const fileURL = URL.createObjectURL(file);
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   attachment: fileURL,
-      // }));
     }
   };
   const selectFileFromLSHandler = () => {
@@ -276,6 +271,7 @@ const CreateIssueModal = ({
             value={state.assignee}
             onChange={inputChangeHandler}
           >
+            <option value="none">None</option>
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
             ))}
@@ -288,7 +284,7 @@ const CreateIssueModal = ({
             id=""
             name="reporter"
             value={state.reporter}
-            onChange={reporterInputChangeHandler}
+            onChange={inputChangeHandler}
           >
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
@@ -302,7 +298,7 @@ const CreateIssueModal = ({
             id=""
             name="reviewer"
             value={state.reviewer}
-            onChange={reporterInputChangeHandler}
+            onChange={inputChangeHandler}
           >
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
@@ -316,7 +312,7 @@ const CreateIssueModal = ({
             id=""
             name="qa"
             value={state.qa}
-            onChange={reporterInputChangeHandler}
+            onChange={inputChangeHandler}
           >
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>

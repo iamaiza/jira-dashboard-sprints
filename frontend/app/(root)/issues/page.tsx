@@ -17,7 +17,7 @@ const Issues = () => {
   return (
     <div className="max-md:overflow-x-auto min-h-[87vh]">
       {issues.length > 0 && (
-        <table className="w-full max-md:w-[47rem] text-sm">
+        <table className="w-full max-md:w-[50rem] text-sm">
           <thead>
             <tr>
               <th className="px-1 py-2">Id</th>
@@ -36,34 +36,54 @@ const Issues = () => {
             {issues?.map((issue) => (
               <tr>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  <Link href={`/issues/${issue?.id}`}>{issue?.issueType}</Link>
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.issueType}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.taskId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.taskId?.title.substr(0, 25)}...
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.assigneeId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.assigneeId?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.reporterId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.reporterId?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.viewerId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.viewerId?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.qaId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.qaId?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.sprintId?.id}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.sprintId?.id}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.status}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.taskId?.status}
+                  </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
-                  {issue?.priority}
+                  <Link className="block w-full" href={`/issues/${issue?.id}`}>
+                    {issue?.priority}
+                  </Link>
                 </td>
               </tr>
             ))}

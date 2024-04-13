@@ -44,56 +44,33 @@ export const issueTypes = [
 export const issueStatuses = [
     {
         id: 1,
-        status: "blocked"
+        status: "to-do"
     },
     {
         id: 2,
-        status: "in design"
+        status: "blocked"
     },
     {
         id: 3,
-        status: "awaiting release"
-    },
-    {
-        id: 4,
-        status: "development done"
-    },
-    {
-        id: 5,
-        status: "in code review"
-    },
-    {
-        id: 6,
         status: "in progress"
     },
     {
+        id: 4,
+        status: "awaiting qa"
+    },
+    {
+        id: 5,
+        status: "in qa"
+    },
+    {
+        id: 6,
+        status: "won't do"
+    },
+    {
         id: 7,
-        status: "in qa testing"
-    },
-    {
-        id: 8,
-        status: "in uat"
-    },
-    {
-        id: 9,
-        status: "test passed"
-    },
-    {
-        id: 10,
-        status: "waiting for qa"
-    },
-    {
-        id: 11,
-        status: "waiting for testing"
-    },
-    {
-        id: 12,
         status: "completed"
     },
-    {
-        id: 13,
-        status: "not required"
-    }
+    
 ]
 
 export const issueLabel = [
