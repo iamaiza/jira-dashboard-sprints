@@ -88,7 +88,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="To-Do"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("To-Do")}
+            checked={statusCheck.includes("to-do")}
           />
           <span className="text-slate-600">To-Do</span>
         </div>
@@ -98,7 +98,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="Blocked"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("Blocked")}
+            checked={statusCheck.includes("blocked")}
           />
           <span className="text-slate-600">Blocked</span>
         </div>
@@ -108,7 +108,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="In Progress"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("In Progress")}
+            checked={statusCheck.includes("in progress")}
           />
           <span className="text-slate-600">In Progress</span>
         </div>
@@ -118,7 +118,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="Awaiting QA"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("Awaiting QA")}
+            checked={statusCheck.includes("awaiting qa")}
           />
           <span className="text-slate-600">Awaiting QA</span>
         </div>
@@ -128,7 +128,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="In QA"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("In QA")}
+            checked={statusCheck.includes("in qa")}
           />
           <span className="text-slate-600">In QA</span>
         </div>
@@ -138,7 +138,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="Won't Do"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("Won't Do")}
+            checked={statusCheck.includes("won't do")}
           />
           <span className="text-slate-600">Won't Do</span>
         </div>
@@ -148,7 +148,7 @@ const CreateSprintModal = ({
             type="checkbox"
             value="Completed"
             onChange={statusCheckHandler}
-            checked={statusCheck.includes("Completed")}
+            checked={statusCheck.includes("completed")}
           />
           <span className="text-slate-600">Completed</span>
         </div>
