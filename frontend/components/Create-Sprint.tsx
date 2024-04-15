@@ -84,73 +84,73 @@ const CreateSprintModal = ({
         />
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="To-Do"
+            value="to-do"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("to-do")}
           />
-          <span className="text-slate-600">To-Do</span>
+          <span className="text-slate-800">To-Do</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="Blocked"
+            value="blocked"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("blocked")}
           />
-          <span className="text-slate-600">Blocked</span>
+          <span className="text-slate-800">Blocked</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="In Progress"
+            value="in progress"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("in progress")}
           />
-          <span className="text-slate-600">In Progress</span>
+          <span className="text-slate-800">In Progress</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="Awaiting QA"
+            value="awaiting qa"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("awaiting qa")}
           />
-          <span className="text-slate-600">Awaiting QA</span>
+          <span className="text-slate-800">Awaiting QA</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="In QA"
+            value="in qa"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("in qa")}
           />
-          <span className="text-slate-600">In QA</span>
+          <span className="text-slate-800">In QA</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="Won't Do"
+            value="won't do"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("won't do")}
           />
-          <span className="text-slate-600">Won't Do</span>
+          <span className="text-slate-800">Won't Do</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
-            className="w-fit mb-0 accent-sky-800"
+            className="w-fit mb-0 accent-sky-900"
             type="checkbox"
-            value="Completed"
+            value="completed"
             onChange={statusCheckHandler}
             checked={statusCheck.includes("completed")}
           />
-          <span className="text-slate-600">Completed</span>
+          <span className="text-slate-800">Completed</span>
         </div>
         {error && <p className="text-red-400">{error}</p>}
         <button
