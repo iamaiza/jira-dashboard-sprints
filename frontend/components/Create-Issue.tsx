@@ -1,6 +1,6 @@
 import { XIcon } from "@/icons/icons";
 import { SprintProps, TaskProps, User } from "@/types/types";
-import { issueLabel, issueStatuses, issueTypes } from "@/utils/issues";
+import { issueLabel, issueStatuses, issueTypes, priorities } from "@/utils/issues";
 import {
   CREATE_ISSUE,
   ISSUES,
@@ -110,12 +110,6 @@ const CreateIssueModal = ({
       if (
         !state.projectName.trim() ||
         !state.issueType.trim() ||
-        !state.status.trim() ||
-        !state.assignee.trim() ||
-        !state.sprint.trim() ||
-        !state.reporter.trim() ||
-        !state.reviewer.trim() ||
-        !state.qa.trim() ||
         !state.summary.trim()
       ) {
         alert("Fields are required");
@@ -358,9 +352,9 @@ const CreateIssueModal = ({
             value={state.priority}
             onChange={inputChangeHandler}
           >
-            <option value="high">High</option>
-            <option value="highest">Highest</option>
-            <option value="major">Major</option>
+            {priorities.map(pr => (
+              <option key={pr.id} value={pr.priority}>{pr.priority}</option>
+            ))}
           </select>
         </div>
         <div className="text-sm flex justify-end items-center gap-2 mt-3">

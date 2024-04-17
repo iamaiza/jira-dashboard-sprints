@@ -155,3 +155,30 @@ export const issueLabel = [
         label: "findland"
     }
 ]
+
+export const priorities = [
+    {
+        id: 1,
+        priority: "low"
+    },
+    {
+        id: 2,
+        priority: "lowest"
+    },
+    {
+        id: 3,
+        priority: "medium"
+    },
+    {
+        id: 4,
+        priority: "high"
+    },
+    {
+        id: 5,
+        priority: "highest"
+    },
+    {
+        id: 6,
+        priority: "major"
+    },
+]

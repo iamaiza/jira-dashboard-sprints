@@ -19,6 +19,8 @@ model User {
   location     String?
   atTasks      Task[]    @relation(name: "Assignee")
   rTasks       Task[]    @relation(name: "Reporter")
+  vTasks       Task[]    @relation(name: "Viewer")
+  qaTasks      Task[]    @relation(name: "QA")
   comments     Comment[]
   aIssues      Issue[]   @relation(name: "Assignee")
   rIssues      Issue[]   @relation(name: "Reporter")
@@ -46,9 +48,13 @@ model Task {
   estimatedTime DateTime?
   timeTaken     DateTime?
   assigneeId    Int?
-  assignee      User?      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  assignee      User?     @relation(name: "Assignee", fields: [assigneeId], references: [id])
   reporterId    Int?
-  reporter      User?      @relation(name: "Reporter", fields: [reporterId], references: [id])
+  reporter      User?     @relation(name: "Reporter", fields: [reporterId], references: [id])
+  viewerId      Int?
+  viewer        User?     @relation(name: "Viewer", fields: [viewerId], references: [id])
+  qaId          Int?
+  qa            User?     @relation(name: "QA", fields: [qaId], references: [id])
   priority      String
   sprintId      Int
   sprint        Sprint    @relation(fields: [sprintId], references: [id])
@@ -62,9 +68,9 @@ model Comment {
   userId  Int
   user    User   @relation(fields: [userId], references: [id])
   taskId  Int?
-  task    Task?   @relation(fields: [taskId], references: [id])
+  task    Task?  @relation(fields: [taskId], references: [id])
   issueId Int?
-  issue   Issue?  @relation(fields: [issueId], references: [id])
+  issue   Issue? @relation(fields: [issueId], references: [id])
 }
 
 model Issue {
@@ -81,12 +87,12 @@ model Issue {
   label       String
   priority    String
   assigneeId  Int?
-  assignee    User?      @relation(name: "Assignee", fields: [assigneeId], references: [id])
+  assignee    User?     @relation(name: "Assignee", fields: [assigneeId], references: [id])
   reporterId  Int?
-  reporter    User?      @relation(name: "Reporter", fields: [reporterId], references: [id])
+  reporter    User?     @relation(name: "Reporter", fields: [reporterId], references: [id])
   viewerId    Int?
-  viewer      User?      @relation(name: "Viewer", fields: [viewerId], references: [id])
+  viewer      User?     @relation(name: "Viewer", fields: [viewerId], references: [id])
   qaId        Int?
-  QA          User?      @relation(name: "QA", fields: [qaId], references: [id])
+  QA          User?     @relation(name: "QA", fields: [qaId], references: [id])
   comments    Comment[]
 }

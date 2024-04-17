@@ -191,7 +191,11 @@ export const EditIcon = ({ className }: { className: string }) => {
 
 export const HighPriorityIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className="w-4 h-4">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+    >
       <path
         d="M3.5 9.9c-.5.3-1.1.1-1.4-.3s-.1-1.1.4-1.4l5-3c.3-.2.7-.2 1 0l5 3c.5.3.6.9.3 1.4-.3.5-.9.6-1.4.3L8 7.2 3.5 9.9z"
         fill="#ff5630"
@@ -202,7 +206,11 @@ export const HighPriorityIcon = () => {
 
 export const HigherPriorityIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className="w-4 h-4">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+    >
       <path
         d="M3.47876 7.9c-.5.3-1.1.1-1.4-.4s-.1-1 .4-1.3l5-3c.3-.2.7-.2 1 0l5 3c.5.3.6.9.3 1.4-.2.4-.8.6-1.3.3l-4.5-2.7-4.5 2.7z"
         fill="#ff5630"
@@ -217,7 +225,11 @@ export const HigherPriorityIcon = () => {
 
 export const HighestPriorityIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className="w-4 h-4">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+    >
       <path
         d="M7.984436 3.200867l-4.5 2.7c-.5.3-1.1.1-1.3-.4s-.2-1.1.3-1.3l5-3c.3-.2.7-.2 1 0l5 3c.5.3.6.9.3 1.4-.3.5-.9.6-1.4.3l-4.4-2.7z"
         fill="#ff5630"
@@ -230,6 +242,83 @@ export const HighestPriorityIcon = () => {
         d="M3.484436 14.500867c-.5.3-1.1.2-1.3-.3s-.2-1.1.3-1.4l5-3c.3-.2.7-.2 1 0l5 3c.5.3.6.9.3 1.4-.3.5-.9.6-1.4.3l-4.4-2.7-4.5 2.7z"
         fill="#ff8f73"
       />
+    </svg>
+  );
+};
+
+export const LowPriorityIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+    >
+      <path
+        d="M12.5 6.1c.5-.3 1.1-.1 1.4.4.3.5.1 1.1-.3 1.3l-5 3c-.3.2-.7.2-1 0l-5-3c-.6-.2-.7-.9-.4-1.3.2-.5.9-.7 1.3-.4L8 8.8l4.5-2.7z"
+        fill="#0065ff"
+      />
+    </svg>
+  );
+};
+
+export const LowestPriority = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+    >
+      <path
+        d="M12.504883 8.14541c.5-.3 1.1-.1 1.4.4s.1 1-.4 1.3l-5 3c-.3.2-.7.2-1 0l-5-3c-.5-.3-.6-.9-.3-1.4.2-.4.8-.6 1.3-.3l4.5 2.7 4.5-2.7z"
+        fill="#0065ff"
+      />
+      <path
+        d="M12.504883 3.84541c.5-.3 1.1-.2 1.4.3s.1 1.1-.4 1.4l-5 3c-.3.2-.7.2-1 0l-5-3c-.5-.3-.6-.9-.3-1.4.3-.5.9-.6 1.4-.3l4.4 2.7 4.5-2.7z"
+        fill="#2684ff"
+      />
+    </svg>
+  );
+};
+
+export const MediumPriority = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      id="Warstwa_1"
+      x="0px"
+      y="0px"
+      viewBox="0 0 16 16"
+      className="w-4 h-4"
+      enableBackground="new 0 0 16 16"
+      xmlSpace="preserve"
+      style={{ fill: "#FFAB00" }}
+    >
+      <g id="icon_x2F_16px_x2F_medium-priority-">
+        <g>
+          <path
+            d="M3,4h10c0.6,0,1,0.4,1,1s-0.4,1-1,1H3C2.4,6,2,5.6,2,5S2.4,4,3,4z M3,10h10c0.6,0,1,0.4,1,1s-0.4,1-1,1H3    c-0.6,0-1-0.4-1-1S2.4,10,3,10z"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const UserIcon = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      role="presentation"
+      className={className}
+    >
+      <g fill="currentColor" fill-rule="evenodd">
+        <path d="M6 14c0-1.105.902-2 2.009-2h7.982c1.11 0 2.009.894 2.009 2.006v4.44c0 3.405-12 3.405-12 0V14z"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
     </svg>
   );
 };
