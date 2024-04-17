@@ -64,10 +64,10 @@ const CreateSprintModal = ({
   };
 
   return (
-    <div className="bg-white top-1/2 -translate-y-1/2 absolute left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
+    <div className="bg-slate-800 top-1/2 -translate-y-1/2 absolute left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
       <form className="w-full" onSubmit={createSprintHandler}>
         <input
-        className="bg-transparent border"
+        className="text-slate-200"
           type="text"
           name="title"
           placeholder="Sprint Title"
@@ -75,7 +75,7 @@ const CreateSprintModal = ({
           onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
-          className="mb-0.5 bg-transparent border"
+          className="mb-0.5 text-slate-200"
           rows={5}
           name="description"
           placeholder="Description"
@@ -90,7 +90,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("to-do")}
           />
-          <span className="text-slate-800">To-Do</span>
+          <span className="text-slate-300">To-Do</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -100,7 +100,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("blocked")}
           />
-          <span className="text-slate-800">Blocked</span>
+          <span className="text-slate-300">Blocked</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -110,7 +110,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("in progress")}
           />
-          <span className="text-slate-800">In Progress</span>
+          <span className="text-slate-300">In Progress</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -120,7 +120,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("awaiting qa")}
           />
-          <span className="text-slate-800">Awaiting QA</span>
+          <span className="text-slate-300">Awaiting QA</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -130,7 +130,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("in qa")}
           />
-          <span className="text-slate-800">In QA</span>
+          <span className="text-slate-300">In QA</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -140,7 +140,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("won't do")}
           />
-          <span className="text-slate-800">Won't Do</span>
+          <span className="text-slate-300">Won't Do</span>
         </div>
         <div className="flexStart gap-2 mb-2">
           <input
@@ -150,7 +150,7 @@ const CreateSprintModal = ({
             onChange={statusCheckHandler}
             checked={statusCheck.includes("completed")}
           />
-          <span className="text-slate-800">Completed</span>
+          <span className="text-slate-300">Completed</span>
         </div>
         {error && <p className="text-red-400">{error}</p>}
         <button

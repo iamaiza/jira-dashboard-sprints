@@ -1,10 +1,15 @@
 "use client";
 
+import Title from "@/components/Title";
 import {
   CheckIcon,
   HighPriorityIcon,
   HigherPriorityIcon,
   HighestPriorityIcon,
+  LowPriorityIcon,
+  LowestPriority,
+  MediumPriority,
+  UserIcon,
   XIcon,
 } from "@/icons/icons";
 import { DragResult, SprintProps, TaskProps, User } from "@/types/types";
@@ -18,10 +23,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -45,7 +47,6 @@ const SprintDetailPage = () => {
   const [updateTaskStatusMutation] = useMutation(UPDATE_STATUS);
   const [filterTasks, setFilterTasks] = useState("");
   const [title, setTitle] = useState("");
-  const [showIcons, setShowIcons] = useState(false);
   const [isUpdateTitle, setIsUpdatedTitle] = useState(false);
   const [updateTitleMutation] = useMutation(UPDATE_SPRINT_TITLE);
 
@@ -100,49 +101,16 @@ const SprintDetailPage = () => {
     setIsUpdatedTitle(false);
     console.log(data);
   };
-  const deleteTitleHandler = () => {
-    setIsUpdatedTitle(false);
-  };
-
   return (
     <div className="mt-32">
       <div id="title">
-        {isUpdateTitle ? (
-          <div className="relative">
-            <textarea
-              className={`bg-transparent text-[1.6rem] font-semibold pl-0 h-fit text-slate-300 ${
-                isUpdateTitle && "pl-2 border border-slate-500"
-              }`}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onFocus={() => setShowIcons(true)}
-              autoFocus={isUpdateTitle && true}
-            />
-            {showIcons && (
-              <div className="flexCenter gap-1 absolute right-0 top-full z-10">
-                <div
-                  className="bg-slate-900 py-2 px-2.5 rounded"
-                  onClick={deleteTitleHandler}
-                >
-                  <XIcon className="stroke-gray-400 w-4 h-4" />
-                </div>
-                <div
-                  className="bg-slate-900 py-2 px-2.5 rounded"
-                  onClick={updateTitleHandler}
-                >
-                  <CheckIcon className="stroke-gray-400 w-4 h-4" />
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <h1
-            className="text-[1.6rem] font-semibold"
-            onClick={() => setIsUpdatedTitle(true)}
-          >
-            {title}
-          </h1>
-        )}
+        <Title
+          title={title}
+          setTitle={setTitle}
+          isUpdateTitle={isUpdateTitle}
+          setIsUpdatedTitle={setIsUpdatedTitle}
+          updateTitleHandler={updateTitleHandler}
+        />
       </div>
       <p className="text-gray-500 text-sm" title={sprint?.description}>
         {sprint?.description?.substr(0, 140)}
@@ -150,7 +118,7 @@ const SprintDetailPage = () => {
       </p>
       <div className="mt-5 flexStart gap-3">
         <input
-          className="w-40 mb-0 bg-slate-900 border-0 focus:w-52"
+          className="w-40 mb-0 bg-slate-900 text-slate-200 border-0 focus:w-52"
           type="text"
           placeholder="Search"
           value={filterTasks}
@@ -176,15 +144,15 @@ const SprintDetailPage = () => {
           ))}
         </div>
       </div>
-      <div className="max-w-full max-lg:overflow-x-auto pb-5">
+      <div className="max-w-full overflow-x-auto pb-5">
         <DragDropContext onDragEnd={taskDropHandler}>
-          <div className="flexBetween gap-5 mt-10 max-lg:w-[60rem]">
+          <div className="flex justify-between gap-5 mt-10 w-[1235px]">
             {sprint?.status.map((st) => (
               <Droppable droppableId={st}>
                 {(provided: DroppableProvided) => (
                   <div
                     key={sprint.id}
-                    className="bg-slate-900 min-h-[30rem] py-3 px-4 flex-1 max-md:w-[32rem]"
+                    className="bg-slate-900 min-h-[30rem] py-3 px-3 flex-1 max-md:w-[32rem]"
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
@@ -224,8 +192,18 @@ const SprintDetailPage = () => {
                                   {task?.priority === "major" && (
                                     <HighestPriorityIcon />
                                   )}
+                                  {task?.priority === "low" && (
+                                    <LowPriorityIcon />
+                                  )}
+                                  {task?.priority === "lowest" && (
+                                    <LowestPriority />
+                                  )}
+                                  {task?.priority === "medium" && (
+                                    <MediumPriority />
+                                  )}
                                 </div>
-                                <div className="mt-5">
+                                {task?.assigneeId ? (
+                                  <div className="mt-5">
                                   {task?.assigneeId?.imgUrl ? (
                                     <Image
                                       className="rounded-full ml-auto"
@@ -240,6 +218,11 @@ const SprintDetailPage = () => {
                                     </div>
                                   )}
                                 </div>
+                                ) : (
+                                  <div className="mt-5 bg-gray-600 w-fit p-1 rounded-full ml-auto">
+                                    <UserIcon />
+                                  </div>
+                                )}
                               </div>
                             </Link>
                           )}
