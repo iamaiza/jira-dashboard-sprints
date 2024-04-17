@@ -11,7 +11,6 @@ import {
 } from "@/utils/issues";
 import {
   Detail2Props,
-  OptionType,
   SprintProps,
   User,
   UserListProps,
