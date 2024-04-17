@@ -5,6 +5,9 @@ import {
   HighPriorityIcon,
   HigherPriorityIcon,
   HighestPriorityIcon,
+  LowPriorityIcon,
+  LowestPriority,
+  MediumPriority,
 } from "@/icons/icons";
 import { TaskProps } from "@/types/types";
 import { TASKS } from "@/utils/query-mutations";
@@ -55,6 +58,9 @@ const YourWork = () => {
                       {task?.priority === "high" && <HighPriorityIcon />}
                       {task?.priority === "highest" && <HigherPriorityIcon />}
                       {task?.priority === "major" && <HighestPriorityIcon />}
+                      {task?.priority === "low" && <LowPriorityIcon />}
+                      {task?.priority === "lowest" && <LowestPriority />}
+                      {task?.priority === "medium" && <MediumPriority />}
                     </Link>
                   </td>
                 </tr>

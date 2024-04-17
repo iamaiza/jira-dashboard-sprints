@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-  @apply bg-slate-950 text-slate-300 
+  @apply bg-slate-950 text-slate-300;
 }
 
 input,
@@ -31,46 +30,47 @@ select {
 }
 
 .backdrop {
-  @apply absolute inset-0 w-full bg-[#00000046] z-30
+  @apply absolute inset-0 w-full bg-[#00000046] z-30;
 }
 
 .desc-list-style ul {
-  @apply list-disc pl-5
+  @apply list-disc pl-5;
 }
 .desc-list-style ol {
-  @apply list-decimal pl-5
+  @apply list-decimal pl-5;
 }
 
 .desc-list-style h1 {
-  @apply text-[1.5rem]
+  @apply text-[1.5rem];
 }
 .desc-list-style h2 {
-  @apply text-xl
+  @apply text-xl;
 }
 .desc-list-style h3 {
-  @apply text-base
+  @apply text-base;
 }
 .desc-list-style h4 {
-  @apply text-xs
+  @apply text-xs;
 }
 .desc-list-style h5 {
-  @apply text-[0.7rem]
+  @apply text-[0.7rem];
 }
 .desc-list-style h6 {
-  @apply text-[0.55rem]
+  @apply text-[0.55rem];
 }
 .desc-list-style a {
-  @apply text-sky-600 underline
+  @apply text-sky-600 underline;
 }
-/* 
-.high {
-  @apply w-[26px] h-[26px]
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
-
-.higher {
-  @apply w-3 h-3 ml-1.5
+.select::after {
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
-
-.highest {
-  @apply w-5 h-5 ml-1
-} */

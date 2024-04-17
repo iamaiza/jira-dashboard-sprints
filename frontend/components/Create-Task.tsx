@@ -3,6 +3,7 @@ import { SprintProps, User } from "@/types/types";
 import { CREATE_TASK, SPRINTS, TASKS, USERS } from "@/utils/query-mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { priorities } from "@/utils/issues"
 
 const CreateTaskModal = ({
   setShowModal,
@@ -61,6 +62,7 @@ const CreateTaskModal = ({
 
   const createTaskHandler = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
+console.log(state.assignee);
 
     try {
       if (
@@ -81,9 +83,8 @@ const CreateTaskModal = ({
             attachment: state.fileUrl,
             priority: state.priority,
             assigneeId: state.assignee,
-            reporterId: state.reporter,
             sprintId: state.sprint,
-            status: "To-Do",
+            status: "to-do",
           },
         },
       });
@@ -94,10 +95,10 @@ const CreateTaskModal = ({
   };
 
   return (
-    <div className="bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
+    <div className="bg-slate-800 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 max-w-lg w-full p-5 rounded">
       <form className="w-full mt-7" onSubmit={createTaskHandler}>
         <input
-          className="bg-transparent border"
+          className="text-slate-300"
           type="text"
           name="title"
           placeholder="Task Title"
@@ -105,7 +106,7 @@ const CreateTaskModal = ({
           onChange={handleChange}
         />
         <textarea
-          className="bg-transparent border"
+          className="text-slate-300"
           name="desc"
           rows={5}
           placeholder="Task Description"
@@ -114,7 +115,7 @@ const CreateTaskModal = ({
         />
         <div className="flexCenter gap-2 mb-2">
           <input
-            className="mb-0 bg-transparent border"
+            className="mb-0 text-slate-300"
             type="text"
             name="fileUrl"
             placeholder="Attach any file"
@@ -128,34 +129,26 @@ const CreateTaskModal = ({
             <EllipseIcon className="w-6 h-6 stroke-white" />
           </div>
           <input
-            className="bg-transparent border hidden"
+            className=" hidden"
             type="file"
             ref={fileRef}
             onChange={handleFileChange}
           />
         </div>
-        <select className="bg-transparent border text-slate-600" name="priority" value={state.priority} onChange={handleChange}>
-          <option value="high">High</option>
-          <option value="higher">Higher</option>
-          <option value="highest">Highest</option>
+        <select className="text-slate-300" name="priority" value={state.priority} onChange={handleChange}>
+          {priorities.map(pr => (
+            <option key={pr.id} value={pr.priority}>{pr.priority}</option>
+          ))}
         </select>
-        <select className="bg-transparent border text-slate-600" name="assignee" value={state.assignee} onChange={handleChange}>
-          <option value="none">None</option>
+        <select className="text-slate-300" name="assignee" value={state.assignee} onChange={handleChange}>
+          <option>None</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.name}
             </option>
           ))}
         </select>
-        <select className="bg-transparent border text-slate-600" name="reporter" value={state.reporter} onChange={handleChange}>
-          <option value="none">None</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <select className="bg-transparent border text-slate-600" name="sprint" value={state.sprint} onChange={handleChange}>
+        <select className="text-slate-300" name="sprint" value={state.sprint} onChange={handleChange}>
           <option disabled>Sprint</option>
           {sprints.map((spr) => (
             <option key={spr.id} value={spr.id}>
