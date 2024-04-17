@@ -1,7 +1,6 @@
 "use client";
 
 import CreateTaskModal from "@/components/Create-Task";
-import { DeleteIcon } from "@/icons/icons";
 import { TaskProps } from "@/types/types";
 import { TASKS } from "@/utils/query-mutations";
 import { useQuery } from "@apollo/client";
@@ -51,22 +50,40 @@ const Tasks = () => {
             <tbody>
               {tasks?.map((task: TaskProps) => (
                 <tr key={task?.id}>
-                  <td className="py-2 px-2 text-center">{task?.id}</td>
                   <td className="py-2 px-2 text-center">
-                    <Link href={`/tasks/${task?.id}`}>
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.id}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2 text-center">
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
                       {task?.title.substr(0, 25)}...
                     </Link>
                   </td>
-                  <td className="py-2 px-2 text-center capitalize">{task?.status}</td>
-                  <td className="py-2 px-2 text-center">{task?.priority}</td>
-                  <td className="py-2 px-2 text-center">
-                    {task?.assigneeId?.id}
+                  <td className="py-2 px-2 text-center capitalize">
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.status}
+                    </Link>
                   </td>
                   <td className="py-2 px-2 text-center">
-                    {task?.reporterId?.id}
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.priority}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2 text-center capitalize">
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.assigneeId ? task.assigneeId?.id : "none"}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-2 text-center capitalize">
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.reporterId ? task.reporterId?.id : "none"}
+                    </Link>
                   </td>
                   <td className="py-2 px-2 text-center">
-                    {task?.sprintId?.id}
+                    <Link className="block w-full" href={`/tasks/${task?.id}`}>
+                      {task?.sprintId?.id}
+                    </Link>
                   </td>
                 </tr>
               ))}

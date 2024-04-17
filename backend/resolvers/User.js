@@ -7,6 +7,14 @@ const User = {
         const task = await prisma.task.findMany({ where: { reporterId: parseInt(parent.id) } })
         return task;
     },
+    vTasks: async(parent, args, { prisma }) => {
+        const task = await prisma.task.findMany({ where: { viewerId: parseInt(parent.id) } })
+        return task;
+    },
+    qaTasks: async(parent, args, { prisma }) => {
+        const task = await prisma.task.findMany({ where: { qaId: parseInt(parent.id) } })
+        return task;
+    },
     comments: async(parent, args, { prisma }) => {
         const comments = await prisma.comment.findMany({ where: { userId: parseInt(parent.id) } });
         return comments;
