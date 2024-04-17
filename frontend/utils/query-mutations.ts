@@ -100,7 +100,7 @@ export const SPRINTS = gql`
 `;
 
 export const SPRINT = gql`
-  query($id: String!) {
+  query ($id: String!) {
     sprint(id: $id) {
       id
       title
@@ -137,9 +137,9 @@ export const CREATE_TASK = gql`
     createTask(data: $data) {
       id
       title
-      assigneeId {
-        id
-      }
+      # assigneeId {
+      #   id
+      # }
       sprintId {
         id
       }
@@ -169,7 +169,7 @@ export const TASKS = gql`
 `;
 
 export const TASK = gql`
-  query($id: String!) {
+  query ($id: String!) {
     task(id: $id) {
       id
       title
@@ -181,6 +181,16 @@ export const TASK = gql`
         imgUrl
       }
       reporterId {
+        id
+        name
+        imgUrl
+      }
+      viewerId {
+        id
+        name
+        imgUrl
+      }
+      qaId {
         id
         name
         imgUrl
@@ -272,7 +282,7 @@ export const ISSUES = gql`
       id
       issueType
       status
-      taskId{
+      taskId {
         id
         title
         status
@@ -307,7 +317,7 @@ export const ISSUE = gql`
       description
       attachment
       label
-      taskId{
+      taskId {
         id
         title
         description
@@ -381,8 +391,35 @@ export const UPDATE_TASK_STATUS = gql`
 export const UPDATE_SPRINT_TITLE = gql`
   mutation updateSprintTitle($data: TitleInput!) {
     updateSprintTitle(data: $data) {
-      id,
+      id
       title
+    }
+  }
+`;
+
+export const UPDATE_ISSUE_LABEL_TYPE = gql`
+  mutation updateIssueLabelType($data: UpdateIssueLabelTypeInput!) {
+    updateIssueLabelType(data: $data) {
+      id
+      label
+      type
+    }
+  }
+`;
+
+export const UPDATE_TASK_ISSUE = gql`
+  mutation updateTaskIssue($data: UpdateTaskIssueInput!) {
+    updateTaskIssue(data: $data) {
+      id
+      priority
+    }
+  }
+`;
+
+export const UPDATE_TASK_USERS = gql`
+  mutation updateTaskUsers($data: UpdateTaskUsersInput!) {
+    updateTaskUsers(data: $data) {
+      id
     }
   }
 `;

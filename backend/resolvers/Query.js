@@ -54,7 +54,13 @@ const Query = {
         return task;
     },
     issues: async(_, args, { prisma }) => {
-        const issues = await prisma.issue.findMany();
+        const issues = await prisma.issue.findMany({
+            orderBy: [
+                {
+                    id: "asc"
+                }
+            ]
+        });
         return issues;
     },
     issue: async(_, args, { prisma }) => {

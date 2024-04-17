@@ -31,6 +31,8 @@ export interface TaskProps {
   priority: string;
   assigneeId: User | null;
   reporterId: User | null;
+  viewerId: User | null;
+  qaId: User | null;
   sprintId: SprintProps | null;
   comments: CommentProps[];
 }
@@ -72,4 +74,46 @@ export interface IssueProps {
   label: string;
   priority: string
   comments: CommentProps[]
+}
+
+export interface UserListProps {
+  imgUrl?: string;
+  name: string;
+  id?: string
+}
+
+export interface TitleProps {
+  title: string;
+  isUpdateTitle: boolean;
+  setTitle: (value: string) => void;
+  updateTitleHandler: () => void;
+  setIsUpdatedTitle: (value: boolean) => void;
+}
+
+export interface Detail1Props {
+  desc: string;
+  comment: string;
+  setDesc: (value: string) => void;
+  setComment: (value: string) => void;
+  createCommentHandler: () => void;
+  updateDescHandler: () => void;
+  hideEditor: () => void;
+  showEditor: string;
+  setShowEditor: (value: string) => void;
+}
+
+export interface Detail2Props {
+  updateTask: string;
+  setUpdateTask: (value: string) => void;
+  assignee: User | null;
+  sprint: SprintProps | null;
+  priority: string;
+  reporter: User | null;
+  viewer?: User | null;
+  qa?: User | null;
+  label?: string;
+  issueType?: string;
+  task: TaskProps | null;
+  isTask: boolean;
+  issue?: IssueProps | null;
 }
