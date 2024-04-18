@@ -7,6 +7,7 @@ import Comments from "./Comments";
 import { useState } from "react";
 import useCurrentUser from "@/context/CurrentUserContext";
 import { Detail1Props } from "@/types/types";
+import ProfilePhoto from "./ProfilePhoto";
 
 const DetailPanel1 = (props: Detail1Props) => {
   const {
@@ -18,8 +19,7 @@ const DetailPanel1 = (props: Detail1Props) => {
     updateDescHandler,
     hideEditor,
     showEditor,
-    setShowEditor
-
+    setShowEditor,
   } = props;
   const { user } = useCurrentUser();
 
@@ -88,19 +88,7 @@ const DetailPanel1 = (props: Detail1Props) => {
           showEditor ? "items-start" : "items-center"
         } gap-3`}
       >
-        {user?.imgUrl ? (
-          <Image
-            className="rounded-full"
-            src={user.imgUrl}
-            alt={user.name}
-            width={32}
-            height={32}
-          />
-        ) : (
-          <div className="uppercase tracking-widest w-9 h-9 bg-slate-900 rounded-full flexCenter text-[13px] font-bold">
-            {user?.name.substr(0, 2)}
-          </div>
-        )}
+        <ProfilePhoto imgUrl={user?.imgUrl} name={user?.name as string} />
         <div className="flex-1">
           {showEditor === "comment" ? (
             <div>

@@ -117,3 +117,14 @@ export interface Detail2Props {
   isTask: boolean;
   issue?: IssueProps | null;
 }
+
+export interface TaskUsersProps {
+  user: User | null;
+  showList: boolean;
+  setShowList: (value: boolean) => void;
+  isClicked: string;
+  setIsClicked: (value: string) => void
+  users: User[];
+  updateUsersHandler: (value1: User | null, value2: string) => void;
+  selectedUser: string;
+}
