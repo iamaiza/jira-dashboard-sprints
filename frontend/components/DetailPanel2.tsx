@@ -1,6 +1,5 @@
 "use client";
 
-import Select, { OptionProps, StylesConfig } from "react-select";
 import { UserIcon } from "@/icons/icons";
 import UserList from "./UserList";
 import {
@@ -9,13 +8,8 @@ import {
   issueTypes,
   priorities,
 } from "@/utils/issues";
-import {
-  Detail2Props,
-  SprintProps,
-  User,
-  UserListProps,
-} from "@/types/types";
-import React, { ChangeEvent, Ref, useEffect, useState } from "react";
+import { Detail2Props, SprintProps, User } from "@/types/types";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   SPRINTS,
@@ -25,6 +19,7 @@ import {
   USERS,
   UPDATE_TASK_USERS,
 } from "@/utils/query-mutations";
+import TaskUsers from "./TaskUsers";
 
 const DetailPanel2 = (props: Detail2Props) => {
   const {
@@ -52,7 +47,7 @@ const DetailPanel2 = (props: Detail2Props) => {
   const [selectedType, setSelectedType] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [selectedSprint, setSelectedSprint] = useState("");
-  const [isClicked, setIsClicked] = useState<string | null>("");
+  const [isClicked, setIsClicked] = useState("");
   const [updateIssueLabelTypeMutation] = useMutation(UPDATE_ISSUE_LABEL_TYPE);
   const [updateTaskIssueMutation] = useMutation(UPDATE_TASK_ISSUE);
   const [updateUsersMutation] = useMutation(UPDATE_TASK_USERS);
@@ -156,27 +151,43 @@ const DetailPanel2 = (props: Detail2Props) => {
     setSelectedSprint(data?.updateTaskIssue?.updateData);
   };
 
-  const updateUsersHandler = async (user: User, userType: string) => {
+  const updateUsersHandler = async (user: User | null, userType: string) => {
     if (userType === "assignee") {
-      setTaskAssignee(user);
+      if (user === null) setTaskAssignee(null);
+      else setTaskAssignee(user);
     }
     if (userType === "reporter") {
-      setTaskReporter(user);
+      if (user === null) setTaskReporter(null);
+      else setTaskReporter(user);
     }
     if (userType === "viewer") {
-      setTaskViewer(user);
+      if (user === null) setTaskViewer(null);
+      else setTaskViewer(user);
     }
     if (userType === "qa") {
-      setTaskQa(user);
+      if (user === null) setTaskQa(null);
+      else setTaskQa(user);
     }
+
     const { data } = await updateUsersMutation({
       variables: {
         data: {
           id: task?.id,
-          assigneeId: userType === "assignee" ? user?.id : taskAssginee?.id,
-          reporterId: userType === "reporter" ? user?.id : taskReporter?.id,
-          viewerId: userType === "viewer" ? user?.id : taskViewer?.id,
-          qaId: userType === "qa" ? user?.id : taskQa?.id,
+          assigneeId:
+            userType === "assignee"
+              ? user
+                ? user?.id
+                : null
+              : taskAssginee?.id,
+          reporterId:
+            userType === "reporter"
+              ? user
+                ? user?.id
+                : null
+              : taskReporter?.id,
+          viewerId:
+            userType === "viewer" ? (user ? user?.id : null) : taskViewer?.id,
+          qaId: userType === "qa" ? (user ? user?.id : null) : taskQa?.id,
         },
       },
     });
@@ -206,119 +217,29 @@ const DetailPanel2 = (props: Detail2Props) => {
         <div className="px-3 pt-5 text-sm">
           <div className="flex items-center max-[1050px]:flex-col max-[1050px]:items-start gap-2">
             <div className="flex-1">Assignee</div>
-            {taskAssginee ? (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("assignee");
-                }}
-              >
-                <UserList
-                  imgUrl={taskAssginee?.imgUrl}
-                  name={taskAssginee?.name}
-                />
-                {showList && isClicked === "assignee" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "assignee")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("assignee");
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-gray-700 p-0.5 rounded-full">
-                    <UserIcon />
-                  </div>
-                  <div>Not Assigned</div>
-                </div>
-                {showList && isClicked === "assignee" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "assignee")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
+            <TaskUsers
+              user={taskAssginee}
+              showList={showList}
+              setShowList={setShowList}
+              isClicked={isClicked}
+              setIsClicked={setIsClicked}
+              users={users}
+              updateUsersHandler={updateUsersHandler}
+              selectedUser="assignee"
+            />
           </div>
           <div className="flex items-center max-[1050px]:flex-col max-[1050px]:items-start gap-2 mt-5">
             <div className="flex-1">Reporter</div>
-            {taskReporter ? (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(true);
-                  setIsClicked("reporter");
-                }}
-              >
-                <UserList
-                  imgUrl={taskReporter?.imgUrl}
-                  name={taskReporter?.name}
-                />
-                {showList && isClicked === "reporter" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "reporter")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(true);
-                  setIsClicked("reporter");
-                }}
-              >
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="bg-gray-700 p-0.5 rounded-full">
-                    <UserIcon />
-                  </div>
-                  <div>None</div>
-                </div>
-                {showList && isClicked === "reporter" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "reporter")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
+            <TaskUsers
+              user={taskReporter}
+              showList={showList}
+              setShowList={setShowList}
+              isClicked={isClicked}
+              setIsClicked={setIsClicked}
+              users={users}
+              updateUsersHandler={updateUsersHandler}
+              selectedUser="reporter"
+            />
           </div>
           <div className="mt-4 flex items-center max-lg:flex-col max-lg:items-start gap-2">
             <div className="flex-1">Sprint</div>
@@ -360,113 +281,29 @@ const DetailPanel2 = (props: Detail2Props) => {
 
           <div className="flex items-center max-[1050px]:flex-col max-[1050px]:items-start gap-2 mt-5">
             <div className="flex-1">Reviewer</div>
-            {taskViewer ? (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("viewer");
-                }}
-              >
-                <UserList imgUrl={taskViewer?.imgUrl} name={taskViewer?.name} />
-                {showList && isClicked === "viewer" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "viewer")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("viewer");
-                }}
-              >
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="bg-gray-700 p-0.5 rounded-full">
-                    <UserIcon />
-                  </div>
-                  <div>None</div>
-                </div>
-                {showList && isClicked === "viewer" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "viewer")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
+            <TaskUsers
+              user={taskViewer}
+              showList={showList}
+              setShowList={setShowList}
+              isClicked={isClicked}
+              setIsClicked={setIsClicked}
+              users={users}
+              updateUsersHandler={updateUsersHandler}
+              selectedUser="viewer"
+            />
           </div>
           <div className="flex items-center max-[1050px]:flex-col max-[1050px]:items-start gap-2 mt-5">
             <div className="flex-1">QA</div>
-            {taskQa ? (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("qa");
-                }}
-              >
-                <UserList imgUrl={taskQa?.imgUrl} name={taskQa?.name} />
-                {showList && isClicked === "qa" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "qa")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className="flex-1 max-[1050px]:w-full relative cursor-default"
-                onClick={() => {
-                  setShowList(!showList);
-                  setIsClicked("qa");
-                }}
-              >
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="bg-gray-700 p-0.5 rounded-full">
-                    <UserIcon />
-                  </div>
-                  <div>None</div>
-                </div>
-                {showList && isClicked === "qa" && (
-                  <div className="flex flex-col gap-3 bg-slate-900 w-full absolute z-10 p-2 mt-2">
-                    {users.length > 0 &&
-                      users.map((user) => (
-                        <div
-                          key={user?.id}
-                          onClick={() => updateUsersHandler(user, "qa")}
-                        >
-                          <UserList imgUrl={user?.imgUrl} name={user?.name} />
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
+            <TaskUsers
+              user={taskQa}
+              showList={showList}
+              setShowList={setShowList}
+              isClicked={isClicked}
+              setIsClicked={setIsClicked}
+              users={users}
+              updateUsersHandler={updateUsersHandler}
+              selectedUser="qa"
+            />
           </div>
           {!isTask && (
             <>
