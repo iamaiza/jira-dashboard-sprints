@@ -1,5 +1,6 @@
 "use client";
 
+import ProfilePhoto from "@/components/ProfilePhoto";
 import Title from "@/components/Title";
 import {
   CheckIcon,
@@ -203,21 +204,12 @@ const SprintDetailPage = () => {
                                   )}
                                 </div>
                                 {task?.assigneeId ? (
-                                  <div className="mt-5">
-                                  {task?.assigneeId?.imgUrl ? (
-                                    <Image
-                                      className="rounded-full ml-auto"
-                                      src={task?.assigneeId?.imgUrl}
-                                      alt={task?.assigneeId?.name}
-                                      width={26}
-                                      height={26}
+                                  <div className="mt-5 ml-auto w-fit">
+                                    <ProfilePhoto
+                                      imgUrl={task?.assigneeId?.imgUrl}
+                                      name={task?.assigneeId?.name}
                                     />
-                                  ) : (
-                                    <div className="uppercase tracking-widest w-9 h-9 bg-sky-900-600 rounded-full flexCenter text-[13px] font-bold ml-auto">
-                                      {task?.assigneeId?.name?.substr(0, 2)}
-                                    </div>
-                                  )}
-                                </div>
+                                  </div>
                                 ) : (
                                   <div className="mt-5 bg-gray-600 w-fit p-1 rounded-full ml-auto">
                                     <UserIcon />
