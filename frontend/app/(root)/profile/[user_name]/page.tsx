@@ -1,5 +1,6 @@
 "use client";
 
+import ProfilePhoto from "@/components/ProfilePhoto";
 import UserInputs from "@/components/user-inputs";
 import useCurrentUser from "@/context/CurrentUserContext";
 import {
@@ -21,19 +22,7 @@ const Profile = () => {
       <div className="max-w-5xl max-md:w-[50rem] mx-auto flex justify-start items-start gap-3">
         <div className="max-w-[17rem] w-full">
           <div>
-            {user?.imgUrl ? (
-              <Image
-                className="rounded-full border-4 border-slate-900"
-                src={user?.imgUrl}
-                alt="user-img"
-                width={128}
-                height={128}
-              />
-            ) : (
-              <div className="uppercase tracking-widest w-32 h-32 bg-sky-900 rounded-full flexCenter text-5xl font-bold border-4">
-                {user?.name.substr(0, 2)}
-              </div>
-            )}
+            <ProfilePhoto imgUrl={user?.imgUrl} name={user?.name as string} />
           </div>
           <div className="text-[1.7rem] font-semibold text-gray-500 mt-4">
             {user?.name}
