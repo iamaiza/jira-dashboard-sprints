@@ -133,6 +133,11 @@ type TaskUsers {
   qaId: User
 }
 
+type UserImgPayload {
+  id: String
+  imgUrl: String
+}
+
 input RegisterUserInput {
   name: String!
   email: String!
@@ -253,6 +258,11 @@ input UpdateTaskUsersInput {
   qaId: String
 }
 
+input UpdateProfilePhotoInput {
+  id: String
+  imgUrl: String
+}
+
 type Mutation {
   registerUser(data: RegisterUserInput): AuthPayload!
   loginUser(data: LoginUserInput): AuthPayload!
@@ -275,4 +285,5 @@ type Mutation {
   updateIssueLabelType(data: UpdateIssueLabelTypeInput!): IssueLabelType!
   updateTaskIssue(data: UpdateTaskIssueInput!): TaskIssue!
   updateTaskUsers(data: UpdateTaskUsersInput!): TaskUsers!
+  updateProfilePhoto(data: UpdateProfilePhotoInput!): UserImgPayload
 } 
