@@ -156,12 +156,15 @@ export const TASKS = gql`
       status
       assigneeId {
         id
+        name
       }
       reporterId {
         id
+        name
       }
       sprintId {
         id
+        title
       }
       priority
     }
@@ -289,18 +292,23 @@ export const ISSUES = gql`
       }
       assigneeId {
         id
+        name
       }
       reporterId {
         id
+        name
       }
       viewerId {
         id
+        name
       }
       qaId {
         id
+        name
       }
       sprintId {
         id
+        title
       }
       priority
     }
@@ -420,6 +428,14 @@ export const UPDATE_TASK_USERS = gql`
   mutation updateTaskUsers($data: UpdateTaskUsersInput!) {
     updateTaskUsers(data: $data) {
       id
+    }
+  }
+`;
+
+export const UPDATE_IMG_URL = gql`
+  mutation updateProfilePhoto($data: UpdateProfilePhotoInput!){
+    updateProfilePhoto(data: $data) {
+      imgUrl
     }
   }
 `;
