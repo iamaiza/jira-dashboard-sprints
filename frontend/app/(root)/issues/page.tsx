@@ -15,9 +15,9 @@ const Issues = () => {
   }, [data?.issues]);
 
   return (
-    <div className="max-md:overflow-x-auto min-h-[87vh]">
+    <div className="max-[900px]:overflow-x-auto min-h-[87vh]">
       {issues.length > 0 && (
-        <table className="w-full max-md:w-[50rem] text-sm">
+        <table className="w-full max-[900px]:w-[55rem] text-sm">
           <thead>
             <tr>
               <th className="px-1 py-2">Id</th>
@@ -52,27 +52,27 @@ const Issues = () => {
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
                   <Link className="block w-full" href={`/issues/${issue?.id}`}>
-                    {issue?.assigneeId?.id}
+                    {issue?.assigneeId ? issue.assigneeId?.name : "none"}
                   </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
                   <Link className="block w-full" href={`/issues/${issue?.id}`}>
-                    {issue?.reporterId?.id}
+                    {issue?.reporterId ? issue.reporterId?.name : "none"}
                   </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
                   <Link className="block w-full" href={`/issues/${issue?.id}`}>
-                    {issue?.viewerId?.id}
+                    {issue?.viewerId ? issue.viewerId?.name : "none"}
                   </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
                   <Link className="block w-full" href={`/issues/${issue?.id}`}>
-                    {issue?.qaId?.id}
+                    {issue?.qaId ? issue.qaId?.name : "none"}
                   </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
                   <Link className="block w-full" href={`/issues/${issue?.id}`}>
-                    {issue?.sprintId?.id}
+                    {issue?.sprintId?.title}
                   </Link>
                 </td>
                 <td className="text-center capitalize py-1.5 px-1 border-b border-slate-800">
