@@ -46,13 +46,13 @@ const IssueDetail = () => {
     if (data?.issue) setIssue(data.issue);
     if (issue?.description) setDesc(issue.description);
     if (issue?.comments) setComments(issue.comments);
-    if (issue?.taskId?.title) setTitle(issue.taskId.title);
+    if (issue?.summary) setTitle(issue.summary);
     if (issue?.taskId?.status) setUpdateTask(issue.taskId.status);
   }, [
     data?.issue,
     issue?.description,
     issue?.comments,
-    issue?.taskId?.title,
+    issue?.summary,
     issue?.taskId?.status,
   ]);
 
