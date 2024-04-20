@@ -11,6 +11,9 @@ const Query = {
             return { message: "User not found." }
         }
         const user = await prisma.user.findUnique({ where: { id } })
+        const tasks = await prisma.task.findMany({
+            where: { assigneeId: id }
+        })
         return user;
     },
     users: async(_, args, { prisma }) => {

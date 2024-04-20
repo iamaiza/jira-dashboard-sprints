@@ -72,17 +72,17 @@ const Tasks = () => {
                   </td>
                   <td className="py-2 px-2 text-center capitalize">
                     <Link className="block w-full" href={`/tasks/${task?.id}`}>
-                      {task?.assigneeId ? task.assigneeId?.id : "none"}
+                      {task?.assigneeId ? task.assigneeId?.name : "none"}
                     </Link>
                   </td>
                   <td className="py-2 px-2 text-center capitalize">
                     <Link className="block w-full" href={`/tasks/${task?.id}`}>
-                      {task?.reporterId ? task.reporterId?.id : "none"}
+                      {task?.reporterId ? task.reporterId?.name : "none"}
                     </Link>
                   </td>
                   <td className="py-2 px-2 text-center">
                     <Link className="block w-full" href={`/tasks/${task?.id}`}>
-                      {task?.sprintId?.id}
+                      {task?.sprintId?.title}
                     </Link>
                   </td>
                 </tr>
