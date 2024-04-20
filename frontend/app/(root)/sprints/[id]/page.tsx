@@ -203,16 +203,12 @@ const SprintDetailPage = () => {
                                     <MediumPriority />
                                   )}
                                 </div>
-                                {task?.assigneeId ? (
+                                {task?.assigneeId && (
                                   <div className="mt-5 ml-auto w-fit">
                                     <ProfilePhoto
                                       imgUrl={task?.assigneeId?.imgUrl}
                                       name={task?.assigneeId?.name}
                                     />
-                                  </div>
-                                ) : (
-                                  <div className="mt-5 bg-gray-600 w-fit p-1 rounded-full ml-auto">
-                                    <UserIcon />
                                   </div>
                                 )}
                               </div>
