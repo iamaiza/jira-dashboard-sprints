@@ -210,8 +210,8 @@ const Mutation = {
       sprintId: parseSprintId,
     };
 
-    if(assigneeId !== "none") {
-      taskData = {...taskData, assigneeId: parseAssigneeId }
+    if (assigneeId !== "none") {
+      taskData = { ...taskData, assigneeId: parseAssigneeId };
     }
 
     const task = await prisma.task.create({
@@ -324,20 +324,26 @@ const Mutation = {
     const parseSprintId = parseInt(sprintId);
     const parseTaskId = parseInt(taskId);
 
-    const user = await prisma.user.findMany({
-      where: {
-        OR: [
-          { id: parseAssigneeId },
-          { id: parseReporterId },
-          { id: parseReviewerId },
-          { id: parseQaId },
-        ],
-      },
-    });
-    if (!user) {
-      return { message: "User not found" };
+    if (
+      (assigneeId !== "none" && !isNaN(assigneeId)) ||
+      (reporterId !== "none" && !isNaN(reporterId)) ||
+      (viewerId !== "none" && !isNaN(viewerId)) ||
+      (qaId !== "none" && !isNaN(qaId))
+    ) {
+      const user = await prisma.user.findMany({
+        where: {
+          OR: [
+            { id: parseAssigneeId },
+            { id: parseReporterId },
+            { id: parseReviewerId },
+            { id: parseQaId },
+          ],
+        },
+      });
+      if (!user) {
+        return { message: "User not found" };
+      }
     }
-
     const task = await prisma.task.findUnique({
       where: { id: parseTaskId },
     });
@@ -352,34 +358,40 @@ const Mutation = {
       return { message: "Sprint not found" };
     }
 
+    let data = {
+      issueType,
+      status,
+      attachment,
+      description,
+      label,
+      priority,
+      taskId: parseTaskId,
+      sprintId: parseSprintId,
+      summary,
+    };
+    if (assigneeId !== "none") {
+      data = { ...data, assigneeId: parseAssigneeId };
+    } else if (reporterId !== "none") {
+      data = { ...data, reporterId: parseReporterId };
+    } else if (viewerId !== "none") {
+      data = { ...data, viewerId: parseReviewerId };
+    } else if (qaId !== "none") {
+      data = { ...data, qaId: parseQaId };
+    }
     const issue = await prisma.issue.create({
-      data: {
-        issueType,
-        status,
-        attachment,
-        description,
-        label,
-        priority,
-        taskId: parseTaskId,
-        assigneeId: parseAssigneeId,
-        reporterId: parseReporterId,
-        viewerId: parseReviewerId,
-        qaId: parseQaId,
-        sprintId: parseSprintId,
-        summary,
-      },
+      data: data
     });
 
     await prisma.task.update({
       where: { id: parseTaskId },
       data: {
         status,
-        reporterId: parseReporterId,
+        reporterId: reporterId !== "none" && !isNaN(reporterId) ? parseReporterId : null,
         priority,
-        assigneeId: parseAssigneeId,
+        assigneeId: assigneeId !== "none" && !isNaN(assigneeId) ? parseAssigneeId : null,
         sprintId: parseSprintId,
-        viewerId: parseReviewerId,
-        qaId: parseQaId,
+        viewerId: viewerId !== "none" && !isNaN(viewerId) ? parseReviewerId : null,
+        qaId: qaId !== "none" && !isNaN(viewerId) ? parseQaId : null,
       },
     });
 
@@ -545,6 +557,21 @@ const Mutation = {
     }
     return updatedTask;
   },
+  updateProfilePhoto: async(_, args, { prisma }) => {
+    const { id, imgUrl } = args.data;
+    const parseId = parseInt(id);
+
+    const user = await prisma.user.findUnique({
+      where: { id: parseId }
+    })
+    if(!user) return { message: "No user found" };
+
+    const updatedImgUrl = await prisma.user.update({
+      where: { id: parseId },
+      data: { imgUrl }
+    })
+    return updatedImgUrl;
+  }
 };
 
 module.exports = Mutation;

@@ -27,12 +27,16 @@ const CreateIssueModal = ({
     status: "to-do",
     summary: "",
     attachment: "" as string | ArrayBuffer | null,
-    assignee: usersData?.users[0].id || "1",
-    reporter: usersData?.users[0].id || "1",
-    reviewer: usersData?.users[0].id || "1",
-    qa: usersData?.users[0].id || "1",
+    assignee: "none",
+    reporter: "none",
+    reviewer: "none",
+    qa: "none",
+    // assignee: usersData?.users[0].id || "1",
+    // reporter: usersData?.users[0].id || "1",
+    // reviewer: usersData?.users[0].id || "1",
+    // qa: usersData?.users[0].id || "1",
     sprint: sprintData?.sprints[0].id || "1",
-    label: "",
+    label: "app",
     priority: "high",
   }));
   const [createIssueMutation] = useMutation(CREATE_ISSUE, {
@@ -280,6 +284,7 @@ const CreateIssueModal = ({
             value={state.reporter}
             onChange={inputChangeHandler}
           >
+            <option value="none">None</option>
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
             ))}
@@ -294,6 +299,7 @@ const CreateIssueModal = ({
             value={state.reviewer}
             onChange={inputChangeHandler}
           >
+            <option value="none">None</option>
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
             ))}
@@ -308,6 +314,7 @@ const CreateIssueModal = ({
             value={state.qa}
             onChange={inputChangeHandler}
           >
+            <option value="none">None</option>
             {usersData?.users.map((usr: User) => (
               <option value={usr.id}>{usr.name}</option>
             ))}

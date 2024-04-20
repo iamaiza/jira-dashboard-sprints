@@ -203,11 +203,11 @@ const DetailPanel2 = (props: Detail2Props) => {
           onChange={updateTaskStatusHandler}
         >
           <option value={status}>{status}</option>
-          {issueStatuses
-            .filter((st) => st.status != status.toLowerCase())
+          {sprint?.status
+            .filter((st) => st != status.toLowerCase())
             .map((st) => (
-              <option key={st.id} value={st.status}>
-                {st.status}
+              <option key={st} value={st}>
+                {st}
               </option>
             ))}
         </select>
