@@ -1,9 +1,11 @@
 "use client";
+import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { CurrentUserContextProvider } from "@/context/CurrentUserContext";
 import { useState } from "react";
 import CreateIssueModal from "@/components/Create-Issue"
 
+const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({
   children,
 }: Readonly<{
